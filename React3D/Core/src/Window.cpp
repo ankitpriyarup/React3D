@@ -1,7 +1,7 @@
 #include "Window.h"
 
 void Window::CreateWindow( int width, int height,
-	const char * title, void (*update)(), void (*start)() )
+	const char * title, void (*refresh)(), void (*load)() )
 {
 	GLFWwindow* window;
 
@@ -29,13 +29,20 @@ void Window::CreateWindow( int width, int height,
 		glGetString(GL_VERSION) <<
 		std::endl;
 
-	start();
+	load();
+
+	ImGui::CreateContext();
+	ImGui_ImplGlfwGL3_Init(window, true);
+	ImGui::StyleColorsDark();
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		update();
+		refresh();
+
+		ImGui::Render();
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

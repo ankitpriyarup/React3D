@@ -1,64 +1,29 @@
-#include "Window.h"
 #include "EngineResources.h"
+#include "Window.h"
+#include "scene/Scene.h"
+#include "scene/TestClearColor.h"
 #include "Renderer.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "glm\glm.hpp"
-#include "glm\gtc\matrix_transform.hpp"
 
-const int SCREEN_WIDTH = 960;
-const int SCREEN_HEIGHT = 540;
-
-float positions[] =
-{
-	-0.5f, -0.5,
-	0.5f, -0.5f,
-	0.5f,  0.5f,
-	-0.5f,  0.5f
-};
-unsigned int indices[] =
-{
-	0, 1, 2,
-	2, 3, 0
-};
-VertexArray* va;
-VertexBuffer* vb;
-VertexBufferLayout* layout;
-IndexBuffer* ib;
-Shader* shader;
+scene::TestClearColor* test;
 Renderer* renderer;
 
-void start()
+void load()
 {
-	va = new VertexArray;
-	vb = new VertexBuffer(positions, 4 * 2 * sizeof(float));
-	layout = new VertexBufferLayout;
-
-	(*layout).Push<float>(2);
-	(*va).AddBuffer(*vb, *layout);
-
-	ib = new IndexBuffer(indices, 6);
-
-	shader = new Shader("../Core/res/shaders/UnlitColor.shader");
-	(*shader).Bind();
-	(*shader).SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
-
+	test = new scene::TestClearColor;
 	renderer = new Renderer;
 }
 
-void update()
+void refresh()
 {
-	glClearColor(COLOR_DARK_R, COLOR_DARK_G, COLOR_DARK_B, COLOR_DARK_A);
-	(*renderer).Draw(*va, *ib, *shader);
+	test->OnUpdate(0.0f);
+	test->OnRender();
+	ImGui_ImplGlfwGL3_NewFrame();
+	test->OnGUI();
 }
 
 int main(void)
 {
-	Window::CreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "React 3D", &update, &start);
+	Window::CreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "React 3D", &refresh, &load);
 
 	return 0;
 }
