@@ -1,10 +1,9 @@
-#include "Window.h"
+﻿#include "Window.h"
 
-void Window::CreateWindow( int width, int height,
-	const char * title, void (*refresh)(), void (*load)() )
+void Window::CreateWindow(int width, int height,
+	const char *title, void(*refresh)(), void(*load)(),
+	void(*terminate)(), GLFWwindow** window)
 {
-	GLFWwindow* window;
-
 	if (!glfwInit())
 		return;
 
@@ -12,41 +11,37 @@ void Window::CreateWindow( int width, int height,
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(width, height, title, NULL, NULL);
+	(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
 		return;
 	}
 
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(*window);
 	glfwSwapInterval(1);
 
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl;
 
 	std::cout << "[DEBUG BUILD] OpenGL Version: " <<
-		glGetString(GL_VERSION) <<
+		glGetString(GL_VERSION) << " " <<
+		glGetString(GL_VENDOR) << " " <<
+		glGetString(GL_RENDERER) <<
 		std::endl;
 
 	load();
 
-	ImGui::CreateContext();
-	ImGui_ImplGlfwGL3_Init(window, true);
-	ImGui::StyleColorsDark();
-
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(*window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		refresh();
 
-		ImGui::Render();
-		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(*window);
 		glfwPollEvents();
 	}
 
+	
 	glfwTerminate();
 }

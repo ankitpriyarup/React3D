@@ -11,7 +11,6 @@ namespace scene
 
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
-		void OnGUI() override;
 
 	private:
 		float clearColors[4];
