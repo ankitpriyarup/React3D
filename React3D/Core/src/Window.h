@@ -7,7 +7,9 @@
 class Window
 {
 public:
-	static void CreateWindow( int width, int height, const char* iconPath,
+	enum WindowState { RESTORED_DOWN, MAXIMIZED, FULLSCREEN };
+
+	static void CreateWindow( int width, int height, WindowState state, const char* iconPath,
 		const char* title, void(*refresh)(), void(*load)() ,
 		void(*terminate)(), GLFWwindow** window);
 };

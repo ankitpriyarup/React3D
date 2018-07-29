@@ -13,13 +13,14 @@ namespace component
 	class Transform : public Component
 	{
 	private:
-		glm::mat4 projectionMatrix;
+		int* projectionWidth;
+		int* projectionHeight;
 		glm::vec3 position;
 		glm::vec3 rotation;
 		glm::vec3 scale;
 
 	public:
-		Transform(glm::mat4& _projectionMatrix,
+		Transform(int* _projectionWidth, int* _projectionHeight,
 			glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale);
 		~Transform();
 		void Load();

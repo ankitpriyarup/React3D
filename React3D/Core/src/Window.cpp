@@ -1,11 +1,18 @@
 ﻿#include "Window.h"
 
-void Window::CreateWindow(int width, int height, const char* iconPath,
+void Window::CreateWindow(int width, int height, WindowState state, const char* iconPath,
 	const char* title, void(*refresh)(), void(*load)(),
 	void(*terminate)(), GLFWwindow** window)
 {
 	if (!glfwInit())
 		return;
+
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -15,7 +22,26 @@ void Window::CreateWindow(int width, int height, const char* iconPath,
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-	(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
+	switch (state)
+	{
+		case Window::RESTORED_DOWN:
+		{
+			(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
+			break;
+		}
+		case Window::MAXIMIZED:
+		{
+			(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
+			glfwMaximizeWindow(*window);
+			break;
+		}
+		case Window::FULLSCREEN:
+		{
+			(*window) = glfwCreateWindow(mode->width, mode->height, title, glfwGetPrimaryMonitor(), NULL);
+			break;
+		}
+	}
+
 	if (!window)
 	{
 		glfwTerminate();

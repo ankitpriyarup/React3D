@@ -6,13 +6,14 @@ namespace scene
 	class TestObjectRendering : public Scene
 	{
 	private:
+		int* width;
+		int* height;
 		Material* texMat;
 
 	public:
-		glm::mat4& projectionMatrix;
 		std::vector<GameObject*> gameObjects;
 
-		TestObjectRendering(glm::mat4& _projectionMatrix);
+		TestObjectRendering(int* _width, int* _height);
 		~TestObjectRendering();
 		void OnUpdate(float deltaTime) override;
 		void OnRender(Renderer* _renderer) override;

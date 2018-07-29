@@ -11,7 +11,7 @@ private:
 	std::unordered_map<std::string, component::Component*> components;
 
 public:
-	GameObject(glm::mat4& _projectionMatrix);
+	GameObject(int* _projectionWidth, int* _projectionHeight);
 	~GameObject();
 	component::Component* GetComponent(std::string _componentName);
 	void AddMeshRenderer(component::MeshRenderer* _meshRenderer);

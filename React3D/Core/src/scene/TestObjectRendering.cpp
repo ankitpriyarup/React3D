@@ -2,11 +2,12 @@
 
 namespace scene
 {
-	scene::TestObjectRendering::TestObjectRendering(glm::mat4& _projectionMatrix) : projectionMatrix(_projectionMatrix)
+	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) : 
+		width(_width), height(_height)
 	{
 		texMat = new Material("res/shaders/Diffuse.shader", "res/textures/icon_react_large.png");
 
-		GameObject* gb = new GameObject(projectionMatrix);
+		GameObject* gb = new GameObject(_width, _height);
 		gb->AddMeshRenderer(new component::MeshRenderer(texMat, new Mesh()));
 		gameObjects.emplace_back(gb);
 	}
@@ -30,6 +31,8 @@ namespace scene
 
 	void TestObjectRendering::OnRender(Renderer* _renderer)
 	{
+		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+
 		for (GameObject* gameObject : gameObjects)
 			gameObject->Render(_renderer);
 	}
