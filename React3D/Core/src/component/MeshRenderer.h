@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Mesh.h"
 #include "Material.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -13,8 +14,7 @@ namespace component
 	class MeshRenderer : public Component
 	{
 	private:
-		float* data;
-		unsigned int* indices;
+		Mesh* mesh;
 		Material* material;
 		VertexArray* vertexArray;
 		VertexBuffer* vertexBuffer;
@@ -22,13 +22,11 @@ namespace component
 		IndexBuffer* indexBuffer;
 
 	public:
-		MeshRenderer(Material* _material, float* data, unsigned int* indices,
-			unsigned int dataSize, unsigned int indicesSize);
+		MeshRenderer(Material* _material, Mesh* _mesh);
 		~MeshRenderer();
 		void Load();
 		void Render(Renderer* _renderer) override;
-		float* getData() const;
-		unsigned int* getIndices() const;
+		Mesh* getMesh() const;
 		Material* getMaterial() const;
 		void Reset() override;
 		std::string GetComponentName() override;

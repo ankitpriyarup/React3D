@@ -27,8 +27,6 @@ public:
 
 	void add(const std::vector<int>& _vertices, const BatchConfig& config);
 
-
-
 };
 
 struct BatchConfig

@@ -3,20 +3,18 @@
 
 namespace scene
 {
-	class TestClearColor : public Scene
+	class TestObjectRendering : public Scene
 	{
 	private:
 		Material* texMat;
 
 	public:
+		glm::mat4& projectionMatrix;
 		std::vector<GameObject*> gameObjects;
 
-		TestClearColor(glm::mat4& _projectionMatrix);
-		~TestClearColor();
+		TestObjectRendering(glm::mat4& _projectionMatrix);
+		~TestObjectRendering();
 		void OnUpdate(float deltaTime) override;
 		void OnRender(Renderer* _renderer) override;
-
-	private:
-		glm::mat4 projectionMatrix;
 	};
 }

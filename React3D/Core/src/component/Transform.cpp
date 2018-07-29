@@ -14,7 +14,7 @@ void component::Transform::Load()
 {
 	MeshRenderer* meshRenderer = (MeshRenderer*) gameObject->GetComponent(MESH_RENDERER);
 	meshRenderer->getMaterial()->getShader()->SetUniformMat4f("u_MVP", 
-		projectionMatrix * glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)));
+		projectionMatrix * glm::translate(glm::mat4(1.0f), position));
 }
 
 void component::Transform::Render(Renderer* _renderer)

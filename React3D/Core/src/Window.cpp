@@ -1,7 +1,7 @@
 ﻿#include "Window.h"
 
-void Window::CreateWindow(int width, int height,
-	const char *title, void(*refresh)(), void(*load)(),
+void Window::CreateWindow(int width, int height, const char* iconPath,
+	const char* title, void(*refresh)(), void(*load)(),
 	void(*terminate)(), GLFWwindow** window)
 {
 	if (!glfwInit())
@@ -21,14 +21,21 @@ void Window::CreateWindow(int width, int height,
 	glfwMakeContextCurrent(*window);
 	glfwSwapInterval(1);
 
+	GLFWimage icons[1];
+	icons[0].pixels = stbi_load(iconPath, &icons[0].width, &icons[0].height, 0, 4);
+	glfwSetWindowIcon(*window, 1, icons);
+	stbi_image_free(icons[0].pixels);
+
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl;
 
 	std::cout << "[DEBUG BUILD] OpenGL Version: " <<
 		glGetString(GL_VERSION) << " " <<
-		glGetString(GL_VENDOR) << " " <<
 		glGetString(GL_RENDERER) <<
 		std::endl;
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 
 	load();
 

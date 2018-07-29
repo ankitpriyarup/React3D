@@ -1,19 +1,16 @@
 #include "MeshRenderer.h"
 
-component::MeshRenderer::MeshRenderer(Material * _material, float * data, unsigned int * indices,
-	unsigned int dataSize, unsigned int indicesSize)
+component::MeshRenderer::MeshRenderer(Material* _material, Mesh* _mesh)
+	: material(_material), mesh(_mesh)
 {
 	vertexArray = new VertexArray;
-	vertexBuffer = new VertexBuffer(data, dataSize* sizeof(float));
+	vertexBuffer = new VertexBuffer(mesh->data, mesh->dataSize * sizeof(float));
 
 	layout = new VertexBufferLayout;
 	layout->Push<float>(2);
 	layout->Push<float>(2);
 	vertexArray->AddBuffer(*vertexBuffer, *layout);
-
-	indexBuffer = new IndexBuffer(indices, indicesSize);
-
-	material = _material;
+	indexBuffer = new IndexBuffer(mesh->indices, mesh->indicesSize);
 	material->bind();
 }
 
@@ -23,8 +20,7 @@ component::MeshRenderer::~MeshRenderer()
 	delete vertexBuffer;
 	delete layout;
 	delete indexBuffer;
-	delete[] data;
-	delete[] indices;
+	delete mesh;
 }
 
 void component::MeshRenderer::Load()
@@ -36,14 +32,9 @@ void component::MeshRenderer::Render(Renderer* _renderer)
 	_renderer->Draw(*vertexArray, *indexBuffer, *(material->getShader()));
 }
 
-float* component::MeshRenderer::getData() const
+Mesh * component::MeshRenderer::getMesh() const
 {
-	return data;
-}
-
-unsigned int* component::MeshRenderer::getIndices() const
-{
-	return indices;
+	return mesh;
 }
 
 Material* component::MeshRenderer::getMaterial() const

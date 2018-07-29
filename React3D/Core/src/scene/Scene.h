@@ -12,7 +12,6 @@ namespace scene
 	public:
 		Scene() { };
 		virtual ~Scene() { };
-
 		virtual void OnUpdate(float deltaTime) { }
 		virtual void OnRender(Renderer* _renderer) { }
 	};

@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="src\EngineResources.h" />
     <ClInclude Include="src\EngineUI.h" />
+    <ClInclude Include="src\ImageParser.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
     <ClInclude Include="src\vendor\imgui\imgui.h" />
     <ClInclude Include="src\vendor\imgui\imgui_impl_glfw_gl3.h" />
