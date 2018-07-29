@@ -1,10 +1,19 @@
 #include "EngineUI.h"
 
+ImFont* EngineUI::defaultFont;
+ImFont* EngineUI::curFont;
+
 void EngineUI::CreateUIContext(GLFWwindow* window)
 {
 	ImGui::CreateContext();
 	ImGui_ImplGlfwGL3_Init(window, true);
 	ImGui::StyleColorsDark();
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.Fonts->AddFontFromFileTTF("res/DroidSans.ttf", 16.0f);
+	unsigned char* pixels;
+	int width, height;
+	io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 }
 
 void EngineUI::TerminateUIContext()
@@ -39,14 +48,7 @@ void EngineUI::DrawDefaultScreen()
 			ImGui::MenuItem("Delete");
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Components"))
-		{
-			ImGui::MenuItem("Transform");
-			ImGui::MenuItem("Rigidbody");
-			ImGui::MenuItem("Custom");
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Windows"))
+		if (ImGui::BeginMenu("View"))
 		{
 			ImGui::MenuItem("Hierarchy");
 			ImGui::MenuItem("Inspector");
@@ -61,6 +63,8 @@ void EngineUI::DrawDefaultScreen()
 		}
 		ImGui::EndMainMenuBar();
 	}
+
+
 
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

@@ -5,6 +5,10 @@
 
 class EngineUI
 {
+private:
+	static ImFont* defaultFont;
+	static ImFont* curFont;
+
 public:
 	static void DrawDefaultScreen();
 	static void CreateUIContext(GLFWwindow* window);
