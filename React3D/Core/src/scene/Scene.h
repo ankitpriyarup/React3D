@@ -1,4 +1,9 @@
 #pragma once
+#include "Renderer.h"
+#include "GameObject.h"
+#include "component/Component.h"
+#include "component/Transform.h"
+#include "component/MeshRenderer.h"
 
 namespace scene
 {
@@ -9,6 +14,6 @@ namespace scene
 		virtual ~Scene() { };
 
 		virtual void OnUpdate(float deltaTime) { }
-		virtual void OnRender() { }
+		virtual void OnRender(Renderer* _renderer) { }
 	};
 }
