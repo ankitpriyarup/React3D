@@ -3,7 +3,7 @@
 GameObject::GameObject(int* _projectionWidth, int* _projectionHeight)
 {
 	component::Transform* transform = new component::Transform(_projectionWidth, _projectionHeight,
-		component::vecZero, component::vecZero, component::vecOne);
+		component::vecZero, component::rotZero, component::vecOne);
 	components.insert(std::make_pair(transform->GetComponentName(), transform));
 
 	transform->gameObject = this;

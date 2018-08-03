@@ -1,4 +1,3 @@
-#include "EngineResources.h"
 #include "EngineUI.h"
 #include "Window.h"
 #include "scene/Scene.h"
@@ -12,8 +11,7 @@ scene::TestObjectRendering* activeScene;
 Renderer* renderer;
 glm::mat4 screenProjection;
 GLFWwindow* window;
-int width = SCREEN_WIDTH;
-int height = SCREEN_HEIGHT;
+int width, height;
 
 void load()
 {
@@ -41,7 +39,7 @@ void progTerminate()
 
 int main(void)
 {
-	Window::CreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, Window::MAXIMIZED, "res/textures/icon_react_small.png",
+	Window::CreateWindow(width, height, Window::MAXIMIZED, "res/textures/icon_react_small.png",
 		"React 3D", &refresh, &load, &progTerminate, &window);
 
 	return 0;

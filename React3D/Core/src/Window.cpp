@@ -1,6 +1,6 @@
 ﻿#include "Window.h"
 
-void Window::CreateWindow(int width, int height, WindowState state, const char* iconPath,
+void Window::CreateWindow(int& width, int& height, WindowState state, const char* iconPath,
 	const char* title, void(*refresh)(), void(*load)(),
 	void(*terminate)(), GLFWwindow** window)
 {
@@ -31,7 +31,9 @@ void Window::CreateWindow(int width, int height, WindowState state, const char* 
 		}
 		case Window::MAXIMIZED:
 		{
-			(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
+			(*window) = glfwCreateWindow(mode->width, mode->height, title, NULL, NULL);
+			width = mode->width;
+			height = mode->height;
 			glfwMaximizeWindow(*window);
 			break;
 		}

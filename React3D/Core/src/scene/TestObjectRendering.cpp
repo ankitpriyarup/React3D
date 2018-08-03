@@ -20,18 +20,28 @@ namespace scene
 		delete texMat;
 	}
 
+	int logoIncrementX = 1;
+	int logoIncrementY = 1;
+	int incrementRot = 0;
 	void TestObjectRendering::OnUpdate(float deltaTime)
 	{
 		component::Transform* transform = 
 			(component::Transform*) gameObjects[0]->GetComponent(component::TRANSFORM);
 
 		glm::vec3 curPos = transform->getPosition();
-		transform->setPosition(glm::vec3(curPos.x + 1, curPos.y + 1, curPos.z));
+		logoIncrementX *= ((int)curPos.x > (*width - 50) || curPos.x < 0) ? -1 : 1;
+		logoIncrementY *= ((int)curPos.y > (*height - 100) || curPos.y < 0) ? -1 : 1;
+		incrementRot++;
+
+		transform->setPosition(glm::vec3(curPos.x + logoIncrementX , curPos.y + logoIncrementY, curPos.z));
+		transform->setRotation(glm::vec4(0, 0, 1, incrementRot * 0.01f));
+		transform->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
+		transform->UpdateTransform();
 	}
 
 	void TestObjectRendering::OnRender(Renderer* _renderer)
 	{
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 		for (GameObject* gameObject : gameObjects)
 			gameObject->Render(_renderer);
