@@ -5,10 +5,13 @@ namespace scene
 	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) : 
 		width(_width), height(_height)
 	{
+		projectionMatrix = new glm::mat4(glm::ortho(0.0f, (float)*_width, 0.0f, (float)*_height, -500.0f, 500.0f));
+		//projectionMatrix = new glm::mat4(glm::perspective(45.0f, (float)*_width / (float)*_height, 0.0f, 1000.0f));
+
 		texMat = new Material("res/shaders/Diffuse.shader", "res/textures/icon_react_large.png");
 
-		GameObject* gb = new GameObject(_width, _height);
-		gb->AddMeshRenderer(new component::MeshRenderer(texMat, new Mesh()));
+		GameObject* gb = new GameObject(projectionMatrix);
+		gb->AddMeshRenderer(new component::MeshRenderer(texMat, new Mesh(Mesh::PrimitiveMesh::quad)));
 		gameObjects.emplace_back(gb);
 	}
 
@@ -18,6 +21,7 @@ namespace scene
 			delete gameObject;
 
 		delete texMat;
+		delete projectionMatrix;
 	}
 
 	int logoIncrementX = 1;

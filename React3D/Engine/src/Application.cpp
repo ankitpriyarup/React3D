@@ -5,9 +5,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#if _DEBUG
 #include "scene/TestObjectRendering.h"
+#endif
 
-scene::TestObjectRendering* activeScene;
+scene::Scene* activeScene;
 Renderer* renderer;
 glm::mat4 screenProjection;
 GLFWwindow* window;
@@ -17,15 +19,20 @@ void load()
 {
 	renderer = new Renderer;
 
+#if _DEBUG
 	activeScene = new scene::TestObjectRendering(&width, &height);
+#endif
 	EngineUI::CreateUIContext(window);
 }
 
 void refresh()
 {
 	glfwGetWindowSize(window, &width, &height);
-	activeScene->OnRender(renderer);
-	activeScene->OnUpdate(0);
+	if (activeScene != nullptr)
+	{
+		activeScene->OnRender(renderer);
+		activeScene->OnUpdate(0);
+	}
 	EngineUI::DrawDefaultScreen();
 }
 

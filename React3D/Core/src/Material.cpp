@@ -31,6 +31,9 @@ Shader* Material::getShader() const
 void Material::bind()
 {
 	shader->Bind();
-	textures[0]->Bind(0);
-	shader->SetUniform1i("albedo", 0);
+	if (textures.size() > 0)
+	{
+		textures[0]->Bind(0);
+		shader->SetUniform1i("albedo", 0);
+	}
 }

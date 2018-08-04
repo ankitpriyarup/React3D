@@ -7,7 +7,8 @@ public:
 	unsigned int* indices;
 	int dataSize;
 	int indicesSize;
+	enum PrimitiveMesh { quad, cube };
 
-	Mesh();
+	Mesh(PrimitiveMesh _mesh);
 	~Mesh();
 };
