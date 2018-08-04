@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(glm::mat4* _projectionMatrix, glm::vec3 _position)
+GameObject::GameObject(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix, glm::vec3 _position)
 {
-	component::Transform* transform = new component::Transform(_projectionMatrix,
+	component::Transform* transform = new component::Transform(_projectionMatrix, _viewMatrix,
 		_position, component::rotZero, component::vecOne);
 	components.insert(std::make_pair(transform->GetComponentName(), transform));
 

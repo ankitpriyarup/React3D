@@ -15,12 +15,13 @@ namespace component
 	{
 	private:
 		glm::mat4* projectionMatrix;
+		glm::mat4* viewMatrix;
 		glm::vec3 position;
 		glm::vec4 rotation;
 		glm::vec3 scale;
 
 	public:
-		Transform(glm::mat4* _projectionMatrix,
+		Transform(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix,
 			glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 		~Transform();
 		void Update() override;

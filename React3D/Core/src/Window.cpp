@@ -52,6 +52,7 @@ void Window::CreateWindow(int& width, int& height, WindowState state, const char
 
 	glfwMakeContextCurrent(*window);
 	glfwSwapInterval(1);
+	glewExperimental = GL_TRUE;
 
 	GLFWimage icons[1];
 	icons[0].pixels = stbi_load(iconPath, &icons[0].width, &icons[0].height, 0, 4);
@@ -73,12 +74,12 @@ void Window::CreateWindow(int& width, int& height, WindowState state, const char
 
 	while (!glfwWindowShouldClose(*window))
 	{
+		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		refresh();
 
 		glfwSwapBuffers(*window);
-		glfwPollEvents();
 	}
 
 	

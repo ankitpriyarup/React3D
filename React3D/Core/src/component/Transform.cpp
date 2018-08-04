@@ -1,8 +1,9 @@
 #include "Transform.h"
 
-component::Transform::Transform(glm::mat4* _projectionMatrix,
+component::Transform::Transform(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix,
 	glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale)
-	: projectionMatrix(_projectionMatrix), position(_position), rotation(_rotation), scale(_scale)
+	: projectionMatrix(_projectionMatrix), viewMatrix(_viewMatrix),
+	position(_position), rotation(_rotation), scale(_scale)
 {
 }
 
@@ -13,12 +14,15 @@ component::Transform::~Transform()
 void component::Transform::Update()
 {
 	MeshRenderer* meshRenderer = (MeshRenderer*)gameObject->GetComponent(MESH_RENDERER);
-	glm::mat4 viewMatrix;
-	viewMatrix = glm::translate(glm::mat4(1.0f), position);
-	viewMatrix = glm::rotate(viewMatrix, rotation.w, glm::vec3(rotation.x, rotation.y, rotation.z));
-	viewMatrix = glm::scale(viewMatrix, scale);
+	if (meshRenderer == nullptr)
+		return;
+
+	glm::mat4 modelMatrix;
+	modelMatrix = glm::translate(glm::mat4(1.0f), position);
+	modelMatrix = glm::rotate(modelMatrix, rotation.w, glm::vec3(rotation.x, rotation.y, rotation.z));
+	modelMatrix = glm::scale(modelMatrix, scale);
 	meshRenderer->getShader()->Bind();
-	meshRenderer->getShader()->SetUniformMat4f("u_MVP", (*projectionMatrix) * viewMatrix);
+	meshRenderer->getShader()->SetUniformMat4f("u_MVP", (*projectionMatrix) * (*viewMatrix) * modelMatrix);
 }
 
 void component::Transform::Render(Renderer* _renderer)

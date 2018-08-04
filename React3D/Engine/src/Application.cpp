@@ -22,11 +22,38 @@ void load()
 #if _DEBUG
 	activeScene = new scene::TestObjectRendering(&width, &height);
 #endif
+
 	EngineUI::CreateUIContext(window);
 }
 
 void refresh()
 {
+	glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mode)
+	{
+		if (activeScene == nullptr)
+			return;
+		if (key >= 0 && key < 1024)
+			activeScene->KeyCallback(key, scancode, action, mode);
+	});
+	glfwSetCursorPosCallback(window, [](GLFWwindow *window, double xPos, double yPos)
+	{
+		if (activeScene == nullptr)
+			return;
+		activeScene->MouseCallback(xPos, yPos);
+	});
+	glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mode)
+	{
+		if (activeScene == nullptr)
+			return;
+		activeScene->MouseButtonCallback(button, action, mode);
+	});
+	glfwSetScrollCallback(window, [](GLFWwindow *window, double xOffset, double yOffset)
+	{
+		if (activeScene == nullptr)
+			return;
+		activeScene->ScrollCallback(xOffset, yOffset);
+	});
+
 	glfwGetWindowSize(window, &width, &height);
 	if (activeScene != nullptr)
 	{

@@ -11,7 +11,7 @@ namespace scene
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 
-		AddGameObject("tes2t", glm::vec3(-5, 0, -10))
+		AddGameObject("test2", glm::vec3(-5, 0, -10))
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 	}
@@ -26,6 +26,8 @@ namespace scene
 	int incrementRot = 0;
 	void TestObjectRendering::OnUpdate(float deltaTime)
 	{
+		Scene::OnUpdate(deltaTime);
+
 		component::Transform* transform =
 			(component::Transform*) gameObjects["test"]->GetComponent(component::TRANSFORM);
 
