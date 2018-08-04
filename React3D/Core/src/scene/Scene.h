@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 #include "Renderer.h"
 #include "GameObject.h"
 #include "component/Component.h"
@@ -10,11 +11,18 @@ namespace scene
 	class Scene
 	{
 	public:
-		glm::mat4* projectionMatrix;
+		enum Projection { Perspective, Orthographic };
 
-		Scene() { };
-		virtual ~Scene() { };
-		virtual void OnUpdate(float deltaTime) { }
-		virtual void OnRender(Renderer* _renderer) { }
+		int* width;
+		int* height;
+		Projection projection;
+		glm::mat4* projectionMatrix;
+		std::unordered_map<std::string, GameObject*> gameObjects;
+
+		Scene(Projection _projection, int* _width, int* _height);
+		virtual ~Scene();
+		virtual void OnUpdate(float deltaTime) { };
+		virtual void OnRender(Renderer* _renderer);
+		GameObject* AddGameObject(std::string _name, glm::vec3 _position);
 	};
 }

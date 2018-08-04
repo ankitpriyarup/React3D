@@ -11,7 +11,14 @@ component::MeshRenderer::MeshRenderer(Material* _material, Mesh* _mesh)
 	layout->Push<float>(2);
 	vertexArray->AddBuffer(*vertexBuffer, *layout);
 	indexBuffer = new IndexBuffer(mesh->indices, mesh->indicesSize);
-	material->bind();
+
+	shader = new Shader(material->getShader());
+	shader->Bind();
+	if (material->textures.size() > 0)
+	{
+		material->textures[0]->Bind(0);
+		shader->SetUniform1i("albedo", 0);
+	}
 }
 
 component::MeshRenderer::~MeshRenderer()
@@ -21,15 +28,16 @@ component::MeshRenderer::~MeshRenderer()
 	delete layout;
 	delete indexBuffer;
 	delete mesh;
+	delete shader;
 }
 
-void component::MeshRenderer::Load()
+void component::MeshRenderer::Update()
 {
 }
 
 void component::MeshRenderer::Render(Renderer* _renderer)
 {
-	_renderer->Draw(*vertexArray, *indexBuffer, *(material->getShader()));
+	_renderer->Draw(*vertexArray, *indexBuffer, *(shader));
 }
 
 Mesh * component::MeshRenderer::getMesh() const
@@ -49,4 +57,9 @@ void component::MeshRenderer::Reset()
 std::string component::MeshRenderer::GetComponentName()
 {
 	return component::MESH_RENDERER;
+}
+
+Shader * component::MeshRenderer::getShader() const
+{
+	return shader;
 }

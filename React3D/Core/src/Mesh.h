@@ -9,6 +9,6 @@ public:
 	int indicesSize;
 	enum PrimitiveMesh { quad, cube };
 
-	Mesh(PrimitiveMesh _mesh);
+	Mesh(bool _isPerspective, PrimitiveMesh _mesh);
 	~Mesh();
 };

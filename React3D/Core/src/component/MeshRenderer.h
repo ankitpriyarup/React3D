@@ -20,15 +20,17 @@ namespace component
 		VertexBuffer* vertexBuffer;
 		VertexBufferLayout* layout;
 		IndexBuffer* indexBuffer;
+		Shader* shader;
 
 	public:
 		MeshRenderer(Material* _material, Mesh* _mesh);
 		~MeshRenderer();
-		void Load();
+		void Update() override;
 		void Render(Renderer* _renderer) override;
 		Mesh* getMesh() const;
 		Material* getMaterial() const;
 		void Reset() override;
 		std::string GetComponentName() override;
+		Shader* getShader() const;
 	};
 }

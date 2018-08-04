@@ -1,17 +1,18 @@
 #include "Mesh.h"
 
-Mesh::Mesh(PrimitiveMesh _mesh)
+Mesh::Mesh(bool _isPerspective, PrimitiveMesh _mesh)
 {
+	const int projectionMultiplier = (_isPerspective) ? 1 : 100;
 	switch (_mesh)
 	{
 	case Mesh::quad:
 	{
 		data = new float[20]
 		{
-			-0.5f * 100, -0.5f * 100, 0.0f, 0.0f, 0.0f,
-			 0.5f * 100, -0.5f * 100, 0.0f, 1.0f, 0.0f,
-			 0.5f * 100,  0.5f * 100, 0.0f, 1.0f, 1.0f,
-			-0.5f * 100,  0.5f * 100, 0.0f, 0.0f, 1.0f
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, 0.0f, 0.0f, 0.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, 0.0f, 1.0f, 0.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, 0.0f, 1.0f, 1.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, 0.0f, 0.0f, 1.0f
 		};
 
 		indices = new unsigned int[6]
@@ -29,35 +30,35 @@ Mesh::Mesh(PrimitiveMesh _mesh)
 	{
 		data = new float[120]
 		{
-			-0.5f * 1, -0.5f * 1, -0.5f * 1,  0.0f, 0.0f,
-			 0.5f * 1, -0.5f * 1, -0.5f * 1,  1.0f, 0.0f,
-			 0.5f * 1,  0.5f * 1, -0.5f * 1,  1.0f, 1.0f,
-			-0.5f * 1,  0.5f * 1, -0.5f * 1,  0.0f, 1.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 0.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 0.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
 
-			-0.5f * 1, -0.5f * 1,  0.5f * 1,  0.0f, 0.0f,
-			 0.5f * 1, -0.5f * 1,  0.5f * 1,  1.0f, 0.0f,
-			 0.5f * 1,  0.5f * 1,  0.5f * 1,  1.0f, 1.0f,
-			-0.5f * 1,  0.5f * 1,  0.5f * 1,  0.0f, 1.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 1.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 1.0f,
 
-			-0.5f * 1,  0.5f * 1,  0.5f * 1,  1.0f, 0.0f,
-			-0.5f * 1,  0.5f * 1, -0.5f * 1,  1.0f, 1.0f,
-			-0.5f * 1, -0.5f * 1, -0.5f * 1,  0.0f, 1.0f,
-			-0.5f * 1, -0.5f * 1,  0.5f * 1,  0.0f, 0.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
 
-			 0.5f * 1,  0.5f * 1,  0.5f * 1,  1.0f, 0.0f,
-			 0.5f * 1,  0.5f * 1, -0.5f * 1,  1.0f, 1.0f,
-			 0.5f * 1, -0.5f * 1, -0.5f * 1,  0.0f, 1.0f,
-			 0.5f * 1, -0.5f * 1,  0.5f * 1,  0.0f, 0.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
 
-			-0.5f * 1, -0.5f * 1, -0.5f * 1,  0.0f, 1.0f,
-			 0.5f * 1, -0.5f * 1, -0.5f * 1,  1.0f, 1.0f,
-			 0.5f * 1, -0.5f * 1,  0.5f * 1,  1.0f, 0.0f,
-			-0.5f * 1, -0.5f * 1,  0.5f * 1,  0.0f, 0.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
+			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
+			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
 
-			-0.5f * 1,  0.5f * 1, -0.5f * 1,  0.0f, 1.0f,
-			 0.5f * 1,  0.5f * 1, -0.5f * 1,  1.0f, 1.0f,
-			 0.5f * 1,  0.5f * 1,  0.5f * 1,  1.0f, 0.0f,
-			-0.5f * 1,  0.5f * 1,  0.5f * 1,  0.0f, 0.0f
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
+			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
+			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f
 		};
 
 		indices = new unsigned int[36]

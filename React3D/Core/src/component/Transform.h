@@ -23,7 +23,7 @@ namespace component
 		Transform(glm::mat4* _projectionMatrix,
 			glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 		~Transform();
-		void UpdateTransform();
+		void Update() override;
 		void Render(Renderer* _renderer) override;
 		void setPosition(glm::vec3 _position);
 		glm::vec3 getPosition();

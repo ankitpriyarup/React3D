@@ -11,9 +11,10 @@ private:
 	std::unordered_map<std::string, component::Component*> components;
 
 public:
-	GameObject(glm::mat4* _projectionMatrix);
+	GameObject(glm::mat4* _projectionMatrix, glm::vec3 _position);
 	~GameObject();
 	component::Component* GetComponent(std::string _componentName);
 	void AddMeshRenderer(component::MeshRenderer* _meshRenderer);
 	void Render(Renderer* _renderer) const;
+	void Update() const;
 };
