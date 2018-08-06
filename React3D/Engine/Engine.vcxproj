@@ -97,7 +97,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src;$(SolutionDir)Engine\src;$(SolutionDir)Engine\src\vendor</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
