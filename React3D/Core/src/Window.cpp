@@ -1,6 +1,6 @@
 ﻿#include "Window.h"
 
-void Window::CreateWindow(int width, int height, WindowState state, const char* iconPath,
+void Window::CreateWindow(int& width, int& height, WindowState state, const char* iconPath,
 	const char* title, void(*refresh)(), void(*load)(),
 	void(*terminate)(), GLFWwindow** window)
 {
@@ -31,7 +31,9 @@ void Window::CreateWindow(int width, int height, WindowState state, const char* 
 		}
 		case Window::MAXIMIZED:
 		{
-			(*window) = glfwCreateWindow(width, height, title, NULL, NULL);
+			(*window) = glfwCreateWindow(mode->width, mode->height, title, NULL, NULL);
+			width = mode->width;
+			height = mode->height;
 			glfwMaximizeWindow(*window);
 			break;
 		}
@@ -50,6 +52,7 @@ void Window::CreateWindow(int width, int height, WindowState state, const char* 
 
 	glfwMakeContextCurrent(*window);
 	glfwSwapInterval(1);
+	glewExperimental = GL_TRUE;
 
 	GLFWimage icons[1];
 	icons[0].pixels = stbi_load(iconPath, &icons[0].width, &icons[0].height, 0, 4);
@@ -71,12 +74,12 @@ void Window::CreateWindow(int width, int height, WindowState state, const char* 
 
 	while (!glfwWindowShouldClose(*window))
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glfwPollEvents();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		refresh();
 
 		glfwSwapBuffers(*window);
-		glfwPollEvents();
 	}
 
 	

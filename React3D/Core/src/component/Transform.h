@@ -9,26 +9,27 @@ namespace component
 	const static std::string TRANSFORM = "Transform";
 	const static glm::vec3 vecZero = glm::vec3(0, 0, 0);
 	const static glm::vec3 vecOne = glm::vec3(1, 1, 1);
+	const static glm::vec4 rotZero = glm::vec4(1, 1, 1, 0);
 
 	class Transform : public Component
 	{
 	private:
-		int* projectionWidth;
-		int* projectionHeight;
+		glm::mat4* projectionMatrix;
+		glm::mat4* viewMatrix;
 		glm::vec3 position;
-		glm::vec3 rotation;
+		glm::vec4 rotation;
 		glm::vec3 scale;
 
 	public:
-		Transform(int* _projectionWidth, int* _projectionHeight,
-			glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale);
+		Transform(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix,
+			glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 		~Transform();
-		void Load();
+		void Update() override;
 		void Render(Renderer* _renderer) override;
 		void setPosition(glm::vec3 _position);
 		glm::vec3 getPosition();
-		void setRotation(glm::vec3 _rotation);
-		glm::vec3 getRotation();
+		void setRotation(glm::vec4 _rotation);
+		glm::vec4 getRotation();
 		void setScale(glm::vec3 _scale);
 		glm::vec3 getScale();
 		void Reset() override;

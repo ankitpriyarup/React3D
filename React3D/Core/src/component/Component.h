@@ -13,7 +13,7 @@ namespace component
 
 		Component() { };
 		virtual ~Component() { };
-		virtual void Load() { };
+		virtual void Update() { };
 		virtual void Reset() { };
 		virtual void Render(Renderer* _renderer) { }
 		virtual std::string GetComponentName() { return ""; };

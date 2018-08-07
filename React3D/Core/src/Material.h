@@ -1,17 +1,16 @@
 #pragma once
-#include "Shader.h"
 #include "Texture.h"
 
 class Material
 {
 private:
-	std::vector<Texture*> textures;
-	Shader* shader;
+	std::string srcShader;
 
 public:
+	std::vector<Texture*> textures;
+
 	Material(std::string _srcShader);
 	Material(std::string _srcShader, std::string _srcTex);
 	~Material();
-	Shader* getShader() const;
-	void bind();
+	std::string getShader() const;
 };

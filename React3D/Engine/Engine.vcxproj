@@ -153,7 +153,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\EngineResources.h" />
     <ClInclude Include="src\EngineUI.h" />
     <ClInclude Include="src\ImageParser.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
@@ -165,7 +164,7 @@
     <ClInclude Include="src\vendor\imgui\stb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Diffuse.shader" />
+    <None Include="res\shaders\UnlitTexture.shader" />
     <None Include="res\shaders\UnlitColor.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
