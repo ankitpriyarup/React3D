@@ -58,9 +58,22 @@ void scene::Scene::OnUpdate(double deltaTime)
 void scene::Scene::OnRender(Renderer * _renderer)
 {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-
+	glm::vec3 camView = getSceneCameraPosition();
+	
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++)
+	{
 		it->second->Render(_renderer);
+		component::MeshRenderer* rend =
+			(component::MeshRenderer*) it->second->GetComponent(component::MESH_RENDERER);
+		if (rend != nullptr)
+		{
+			if (rend->getMaterial()->defaultUniforms.find("lightView") ==
+				rend->getMaterial()->defaultUniforms.end())
+				continue;
+			rend->getShader()->Bind();
+			rend->getShader()->SetUniform3f("lightView", camView.x, camView.y, camView.z);
+		}
+	}
 }
 
 void scene::Scene::KeyCallback(int key, int scancode, int action, int mode)
