@@ -32,16 +32,16 @@ namespace scene
 		//TEST
 		component::MeshRenderer* rend1 =
 			(component::MeshRenderer*) gameObjects["test"]->GetComponent(component::MESH_RENDERER);
+		component::MeshRenderer* rend2 =
+			(component::MeshRenderer*) gameObjects["test2"]->GetComponent(component::MESH_RENDERER);
+		component::MeshRenderer* rend3 =
+			(component::MeshRenderer*) gameObjects["test3"]->GetComponent(component::MESH_RENDERER);
 		rend1->getShader()->Bind();
 		rend1->getShader()->SetUniform3f("lightPos", 10, 10, 1);
 		rend1->getShader()->SetUniform3f("lightColor", 1.0f, 0.0f, 0.0f);
-		component::MeshRenderer* rend2 =
-			(component::MeshRenderer*) gameObjects["test2"]->GetComponent(component::MESH_RENDERER);
 		rend2->getShader()->Bind();
 		rend2->getShader()->SetUniform3f("lightPos", 10, 10, 1);
 		rend2->getShader()->SetUniform3f("lightColor", 1.0f, 0.0f, 0.0f);
-		component::MeshRenderer* rend3 =
-			(component::MeshRenderer*) gameObjects["test3"]->GetComponent(component::MESH_RENDERER);
 		rend3->getShader()->Bind();
 		rend3->getShader()->SetUniform3f("lightPos", 10, 10, 1);
 		rend3->getShader()->SetUniform3f("lightColor", 1.0f, 0.0f, 0.0f);
@@ -68,5 +68,14 @@ namespace scene
 	void TestObjectRendering::OnRender(Renderer* _renderer)
 	{
 		Scene::OnRender(_renderer);
+
+		component::MeshRenderer* rend1 =
+			(component::MeshRenderer*) gameObjects["test"]->GetComponent(component::MESH_RENDERER);
+		component::MeshRenderer* rend2 =
+			(component::MeshRenderer*) gameObjects["test2"]->GetComponent(component::MESH_RENDERER);
+		component::MeshRenderer* rend3 =
+			(component::MeshRenderer*) gameObjects["test3"]->GetComponent(component::MESH_RENDERER);
+		glm::vec3 camView = getSceneCameraPosition();
+		rend1->getShader()->SetUniform3f("lightView", camView.x, camView.y, camView.z);
 	}
 }

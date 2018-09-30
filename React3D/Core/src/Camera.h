@@ -39,4 +39,5 @@ public:
 	void ProcessKeyboard(CameraMovement _direction, double _deltaTime);
 	void ProcessMouseMovement(float _xOffset, float _yOffset, bool _constrainPitch = true);
 	void ProcessPanMovement(float _xOffset, float _yOffset);
+	glm::vec3 getPosition();
 };

@@ -105,6 +105,11 @@ void scene::Scene::MouseCallback(double xPos, double yPos)
 	UpdateProjections();
 }
 
+glm::vec3 scene::Scene::getSceneCameraPosition()
+{
+	return sceneCamera->getPosition();
+}
+
 GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position)
 {
 	GameObject* gb = new GameObject(projectionMatrix, viewMatrix, _position);

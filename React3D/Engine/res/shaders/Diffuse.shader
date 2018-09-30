@@ -30,6 +30,7 @@ in vec2 v_TexCoord;
 in vec3 v_Normal;
 in vec3 v_FragPos;
 
+uniform vec3 lightView;
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform sampler2D u_albedo;
@@ -46,7 +47,13 @@ void main()
 	float diff = max(dot(norm, lightDir), 0.0f);
 	vec3 diffuse = diff * lightColor;
 
-	vec3 resLight = ambient + diffuse;
+	float specularStrength = 1.0f;
+	vec3 viewDir = normalize(lightView - v_FragPos);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+	vec3 specular = specularStrength * spec * lightColor;
+
+	vec3 resLight = ambient + diffuse + specular;
 	vec4 texColor = texture(u_albedo, v_TexCoord);
 	float blendInverse = 1.0 - u_blend;
 	color = vec4((texColor.r * blendInverse + u_color.r * u_blend) * resLight.r,

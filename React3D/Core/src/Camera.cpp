@@ -73,3 +73,8 @@ void Camera::ProcessPanMovement(float _xOffset, float _yOffset)
 	position -= right  * _xOffset * mouseSensitivity * 0.1f;
 	position -= up * _yOffset * mouseSensitivity * 0.1f;
 }
+
+glm::vec3 Camera::getPosition()
+{
+	return position;
+}
