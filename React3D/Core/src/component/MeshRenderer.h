@@ -14,7 +14,7 @@ namespace component
 	class MeshRenderer : public Component
 	{
 	private:
-		Mesh* mesh;
+		Mesh * mesh;
 		Material* material;
 		VertexArray* vertexArray;
 		VertexBuffer* vertexBuffer;
@@ -25,12 +25,13 @@ namespace component
 	public:
 		MeshRenderer(Material* _material, Mesh* _mesh);
 		~MeshRenderer();
-		void Update() override;
-		void Render(Renderer* _renderer) override;
 		Mesh* getMesh() const;
 		Material* getMaterial() const;
-		void Reset() override;
-		std::string GetComponentName() override;
 		Shader* getShader() const;
+
+		void Update() override;
+		void Render(Renderer* _renderer) override;
+		std::string GetComponentName() override;
+		void Reset() override;
 	};
 }

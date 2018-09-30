@@ -66,5 +66,6 @@
   <ItemGroup>
     <None Include="res\shaders\UnlitColor.shader" />
     <None Include="res\shaders\UnlitTexture.shader" />
+    <None Include="res\shaders\Diffuse.shader" />
   </ItemGroup>
 </Project>

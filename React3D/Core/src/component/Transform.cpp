@@ -22,7 +22,9 @@ void component::Transform::Update()
 	modelMatrix = glm::rotate(modelMatrix, rotation.w, glm::vec3(rotation.x, rotation.y, rotation.z));
 	modelMatrix = glm::scale(modelMatrix, scale);
 	meshRenderer->getShader()->Bind();
-	meshRenderer->getShader()->SetUniformMat4f("u_MVP", (*projectionMatrix) * (*viewMatrix) * modelMatrix);
+	meshRenderer->getShader()->SetUniformMat4f("u_projection", *projectionMatrix);
+	meshRenderer->getShader()->SetUniformMat4f("u_view", *viewMatrix);
+	meshRenderer->getShader()->SetUniformMat4f("u_model", modelMatrix);
 }
 
 void component::Transform::Render(Renderer* _renderer)

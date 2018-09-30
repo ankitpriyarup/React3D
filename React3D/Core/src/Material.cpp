@@ -8,10 +8,15 @@ Material::Material(std::string _srcShader) : srcShader(_srcShader)
 	else
 	{
 		std::string line;
+		bool flag = false;
 		while (getline(stream, line))
 		{
-			if (line.find("uniform") != std::string::npos &&
-				line.find("u_MVP") == std::string::npos)
+			if (!flag)
+			{
+				if (line.find("#shader fragment") != std::string::npos) flag = true;
+				else continue;
+			}
+			if (line.find("uniform") != std::string::npos)
 			{
 				line = line.substr(0, line.length() - 1);
 
@@ -32,6 +37,7 @@ Material::Material(std::string _srcShader) : srcShader(_srcShader)
 					uniform = new Uniform{ Uniform::Type::VECTOR3, new float[3] };
 				else if (*iter == "vec4")
 					uniform = new Uniform{ Uniform::Type::VECTOR4, new float[4] };
+				else break;
 
 				std::advance(iter, 1);
 				defaultUniforms.emplace(std::make_pair(*iter, uniform));
@@ -48,10 +54,15 @@ Material::Material(std::string _srcShader, std::string _srcTex) : srcShader(_src
 	else
 	{
 		std::string line;
+		bool flag = false;
 		while (getline(stream, line))
 		{
-			if (line.find("uniform") != std::string::npos &&
-				line.find("u_MVP") == std::string::npos)
+			if (!flag)
+			{
+				if (line.find("#shader fragment") != std::string::npos) flag = true;
+				else continue;
+			}
+			if (line.find("uniform") != std::string::npos)
 			{
 				line = line.substr(0, line.length() - 1);
 
@@ -63,15 +74,16 @@ Material::Material(std::string _srcShader, std::string _srcTex) : srcShader(_src
 				if (*iter == "sampler2D")
 					uniform = new Uniform{ Uniform::Type::TEXTURE2D, new int };
 				else if (*iter == "int")
-					uniform = new Uniform{ Uniform::Type::INT, new int(0) };
+					uniform = new Uniform{ Uniform::Type::INT, new int };
 				else if (*iter == "float")
-					uniform = new Uniform{ Uniform::Type::FLOAT, new float(1.0f) };
+					uniform = new Uniform{ Uniform::Type::FLOAT, new float };
 				else if (*iter == "vec2")
-					uniform = new Uniform{ Uniform::Type::VECTOR2, new float[2]{1.0f, 1.0f} };
+					uniform = new Uniform{ Uniform::Type::VECTOR2, new float[2] };
 				else if (*iter == "vec3")
-					uniform = new Uniform{ Uniform::Type::VECTOR3, new float[3]{1.0f, 1.0f, 1.0f} };
+					uniform = new Uniform{ Uniform::Type::VECTOR3, new float[3] };
 				else if (*iter == "vec4")
-					uniform = new Uniform{ Uniform::Type::VECTOR4, new float[4]{1.0f, 1.0f, 1.0f, 1.0f} };
+					uniform = new Uniform{ Uniform::Type::VECTOR4, new float[4] };
+				else break;
 
 				std::advance(iter, 1);
 				defaultUniforms.emplace(std::make_pair(*iter, uniform));

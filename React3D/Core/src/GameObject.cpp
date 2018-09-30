@@ -34,6 +34,17 @@ void GameObject::AddMeshRenderer(component::MeshRenderer * _meshRenderer)
 	}
 }
 
+void GameObject::AddLightSource(component::LightSource * _lightSource)
+{
+	auto it = components.find(component::LIGHT_SOURCE);
+	if (it == components.end())
+	{
+		_lightSource->gameObject = this;
+		components.insert(std::make_pair(_lightSource->GetComponentName(), _lightSource));
+		GetComponent(component::TRANSFORM)->Update();
+	}
+}
+
 void GameObject::Render(Renderer* _renderer) const
 {
 	auto it = components.begin();

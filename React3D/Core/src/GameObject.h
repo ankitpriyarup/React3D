@@ -2,6 +2,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "component/Component.h"
+#include "component/LightSource.h"
 #include "component/MeshRenderer.h"
 #include "component/Transform.h"
 
@@ -15,6 +16,7 @@ public:
 	~GameObject();
 	component::Component* GetComponent(std::string _componentName);
 	void AddMeshRenderer(component::MeshRenderer* _meshRenderer);
+	void AddLightSource(component::LightSource* _lightSource);
 	void Render(Renderer* _renderer) const;
 	void Update() const;
 };

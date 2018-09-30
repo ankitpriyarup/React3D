@@ -2,17 +2,17 @@
 
 Mesh::Mesh(bool _isPerspective, PrimitiveMesh _mesh)
 {
-	const int projectionMultiplier = (_isPerspective) ? 1 : 100;
+	const int projMul = (_isPerspective) ? 1 : 100;
 	switch (_mesh)
 	{
 	case Mesh::quad:
 	{
-		data = new float[20]
+		data = new float[32]
 		{
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, 0.0f, 0.0f, 0.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, 0.0f, 1.0f, 0.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, 0.0f, 1.0f, 1.0f,
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, 0.0f, 0.0f, 1.0f
+			-0.5f * projMul, -0.5f * projMul, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			 0.5f * projMul, -0.5f * projMul, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			 0.5f * projMul,  0.5f * projMul, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			-0.5f * projMul,  0.5f * projMul, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
 		};
 
 		indices = new unsigned int[6]
@@ -21,44 +21,44 @@ Mesh::Mesh(bool _isPerspective, PrimitiveMesh _mesh)
 			2, 3, 0
 		};
 
-		dataSize = 20;
+		dataSize = 32;
 		indicesSize = 6;
 
 		break;
 	}
 	case Mesh::cube:
 	{
-		data = new float[120]
+		data = new float[192]
 		{
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 0.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 0.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
+			-0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+			 0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+			 0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+			-0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+																				   
+			-0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+			 0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+			 0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+			-0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+																				   
+			-0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+			-0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+			-0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+			-0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+																				   
+			 0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+			 0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+			 0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+			 0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
 
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 1.0f,
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 1.0f,
+			-0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+			 0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+			 0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+			-0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
 
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
-
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
-
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
-			 0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
-			-0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f,
-
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  0.0f, 1.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier, -0.5f * projectionMultiplier,  1.0f, 1.0f,
-			 0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  1.0f, 0.0f,
-			-0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.5f * projectionMultiplier,  0.0f, 0.0f
+			-0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+			 0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+			 0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+			-0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f,  0.0f,  1.0f,  0.0f
 		};
 
 		indices = new unsigned int[36]
@@ -82,7 +82,7 @@ Mesh::Mesh(bool _isPerspective, PrimitiveMesh _mesh)
 			22, 23, 20
 		};
 
-		dataSize = 120;
+		dataSize = 192;
 		indicesSize = 36;
 
 		break;

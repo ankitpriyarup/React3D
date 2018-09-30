@@ -24,15 +24,16 @@ namespace component
 		Transform(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix,
 			glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 		~Transform();
-		void Update() override;
-		void Render(Renderer* _renderer) override;
 		void setPosition(glm::vec3 _position);
 		glm::vec3 getPosition();
 		void setRotation(glm::vec4 _rotation);
 		glm::vec4 getRotation();
 		void setScale(glm::vec3 _scale);
 		glm::vec3 getScale();
-		void Reset() override;
+
+		void Update() override;
+		void Render(Renderer* _renderer) override;
 		std::string GetComponentName() override;
+		void Reset() override;
 	};
 }

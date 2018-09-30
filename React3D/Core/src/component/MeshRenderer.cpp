@@ -9,6 +9,7 @@ component::MeshRenderer::MeshRenderer(Material* _material, Mesh* _mesh)
 	layout = new VertexBufferLayout;
 	layout->Push<float>(3);
 	layout->Push<float>(2);
+	layout->Push<float>(3);
 	vertexArray->AddBuffer(*vertexBuffer, *layout);
 	indexBuffer = new IndexBuffer(mesh->indices, mesh->indicesSize);
 

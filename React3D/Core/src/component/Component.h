@@ -9,7 +9,7 @@ namespace component
 	class Component
 	{
 	public:
-		GameObject* gameObject;
+		GameObject * gameObject;
 
 		Component() { };
 		virtual ~Component() { };
