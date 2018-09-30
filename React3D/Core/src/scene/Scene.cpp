@@ -3,8 +3,8 @@
 scene::Scene::Scene(Projection _projection, int* _width, int* _height) :
 	width(_width), height(_height), projection(_projection)
 {
-	lastX = (*width) / 2;
-	lastY = (*height) / 2;
+	lastX = (GLfloat) (*width) / 2;
+	lastY = (GLfloat) (*height) / 2;
 	sceneCamera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 	viewMatrix = new glm::mat4();
 	*viewMatrix = sceneCamera->GetViewMatrix();
@@ -12,10 +12,10 @@ scene::Scene::Scene(Projection _projection, int* _width, int* _height) :
 	switch (projection)
 	{
 	case Projection::Perspective:
-		projectionMatrix = new glm::mat4(glm::perspective(sceneCamera->GetZoom(), (float)*_width / (float)*_height, 0.0f, 1000.0f));
+		projectionMatrix = new glm::mat4(glm::perspective(45.0f, (GLfloat)*_width / (GLfloat)*_height, 0.1f, 1000.0f));
 		break;
 	case Projection::Orthographic:
-		projectionMatrix = new glm::mat4(glm::ortho(0.0f, (float)*_width, 0.0f, (float)*_height, 0.0f, 1000.0f));
+		projectionMatrix = new glm::mat4(glm::ortho(0.0f, (GLfloat)*_width, 0.0f, (GLfloat)*_height, 0.1f, 1000.0f));
 		break;
 	}
 }
@@ -28,19 +28,31 @@ scene::Scene::~Scene()
 	delete projectionMatrix;
 }
 
-void scene::Scene::OnUpdate(float deltaTime)
+void scene::Scene::OnUpdate(double deltaTime)
 {
 	if (keys[KEY_W] || keys[KEY_UP])
+	{
 		sceneCamera->ProcessKeyboard(FORWARD, deltaTime);
+		UpdateProjections();
+	}
 
 	if (keys[KEY_S] || keys[KEY_DOWN])
+	{
 		sceneCamera->ProcessKeyboard(BACKWARD, deltaTime);
+		UpdateProjections();
+	}
 
 	if (keys[KEY_A] || keys[KEY_LEFT])
+	{
 		sceneCamera->ProcessKeyboard(LEFT, deltaTime);
+		UpdateProjections();
+	}
 
 	if (keys[KEY_D] || keys[KEY_RIGHT])
+	{
 		sceneCamera->ProcessKeyboard(RIGHT, deltaTime);
+		UpdateProjections();
+	}
 }
 
 void scene::Scene::OnRender(Renderer * _renderer)
@@ -57,48 +69,40 @@ void scene::Scene::KeyCallback(int key, int scancode, int action, int mode)
 		keys[key] = true;
 	else if (action == KEY_RELEASE)
 		keys[key] = false;
-	*viewMatrix = sceneCamera->GetViewMatrix();
 }
 
 void scene::Scene::MouseButtonCallback(int button, int action, int mode)
 {
-	if (button == KEY_MOUSE_BUTTON_RIGHT)
+	if (action == KEY_PRESS)
 	{
-		if (action == KEY_PRESS)
-			buttonRightPressed = true;
-		else if (action == KEY_RELEASE)
-			buttonRightPressed = false;
+		firstMouse = true;
+		mouseButtons[button] = true;
 	}
+	else if (action == KEY_RELEASE)
+		mouseButtons[button] = false;
 }
 
 void scene::Scene::MouseCallback(double xPos, double yPos)
 {
-	if (!buttonRightPressed)
+	if (!mouseButtons[KEY_MOUSE_BUTTON_RIGHT] && !mouseButtons[KEY_MOUSE_BUTTON_MIDDLE])
 		return;
 
 	if (firstMouse)
 	{
-		lastX = xPos;
-		lastY = yPos;
+		lastX = (GLfloat)xPos;
+		lastY = (GLfloat)yPos;
 		firstMouse = false;
 	}
 
-	GLfloat xOffset = xPos - lastX;
-	GLfloat yOffset = lastY - yPos;
+	GLfloat xOffset = (GLfloat)(xPos - lastX);
+	GLfloat yOffset = (GLfloat)(lastY - yPos);
 
-	lastX = xPos;
-	lastY = yPos;
+	if (mouseButtons[KEY_MOUSE_BUTTON_RIGHT])
+		sceneCamera->ProcessMouseMovement(xOffset, yOffset);
+	if (mouseButtons[KEY_MOUSE_BUTTON_MIDDLE])
+		sceneCamera->ProcessPanMovement(xOffset, yOffset);
 
-	sceneCamera->ProcessMouseMovement(xOffset, yOffset);
-	*viewMatrix = sceneCamera->GetViewMatrix();
-	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++)
-		it->second->GetComponent(component::TRANSFORM)->Update();
-}
-
-void scene::Scene::ScrollCallback(double xOffset, double yOffset)
-{
-	sceneCamera->ProcessMouseScroll(yOffset);
-	*viewMatrix = sceneCamera->GetViewMatrix();
+	UpdateProjections();
 }
 
 GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position)
@@ -106,4 +110,12 @@ GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position)
 	GameObject* gb = new GameObject(projectionMatrix, viewMatrix, _position);
 	gameObjects.insert(std::make_pair(_name, gb));
 	return gb;
+}
+
+void scene::Scene::UpdateProjections()
+{
+	*viewMatrix = sceneCamera->GetViewMatrix();
+
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++)
+		it->second->GetComponent(component::TRANSFORM)->Update();
 }

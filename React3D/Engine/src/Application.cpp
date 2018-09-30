@@ -14,6 +14,8 @@ Renderer* renderer;
 glm::mat4 screenProjection;
 GLFWwindow* window;
 int width, height;
+double deltaTime = 0.0f;
+double lastFrame = 0.0f;
 
 void load()
 {
@@ -47,18 +49,17 @@ void refresh()
 			return;
 		activeScene->MouseButtonCallback(button, action, mode);
 	});
-	glfwSetScrollCallback(window, [](GLFWwindow *window, double xOffset, double yOffset)
-	{
-		if (activeScene == nullptr)
-			return;
-		activeScene->ScrollCallback(xOffset, yOffset);
-	});
 
 	glfwGetWindowSize(window, &width, &height);
+
+	double currentFrame = glfwGetTime();
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+
 	if (activeScene != nullptr)
 	{
 		activeScene->OnRender(renderer);
-		activeScene->OnUpdate(0);
+		activeScene->OnUpdate(deltaTime);
 	}
 	EngineUI::DrawDefaultScreen();
 }

@@ -11,7 +11,7 @@ namespace scene
 	public:
 		TestObjectRendering(int* _width, int* _height);
 		~TestObjectRendering();
-		void OnUpdate(float deltaTime) override;
+		void OnUpdate(double deltaTime) override;
 		void OnRender(Renderer* _renderer) override;
 	};
 }

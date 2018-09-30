@@ -14,11 +14,11 @@ namespace scene
 	{
 	private:
 		bool keys[1024];
+		bool mouseButtons[3];
 		Camera* sceneCamera;
-		GLfloat lastX;
-		GLfloat lastY;
+		float lastX;
+		float lastY;
 		bool firstMouse = true;
-		bool buttonRightPressed = false;
 
 	public:
 		enum Projection { Perspective, Orthographic };
@@ -32,12 +32,12 @@ namespace scene
 
 		Scene(Projection _projection, int* _width, int* _height);
 		virtual ~Scene();
-		virtual void OnUpdate(float deltaTime);
+		virtual void OnUpdate(double deltaTime);
 		virtual void OnRender(Renderer* _renderer);
 		void KeyCallback(int key, int scancode, int action, int mode);
 		void MouseButtonCallback(int button, int action, int mode);
 		void MouseCallback(double xPos, double yPos);
-		void ScrollCallback(double xOffset, double yOffset);
 		GameObject* AddGameObject(std::string _name, glm::vec3 _position);
+		void UpdateProjections();
 	};
 }

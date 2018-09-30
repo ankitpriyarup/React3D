@@ -1,5 +1,12 @@
 #pragma once
+#include <iostream>
+#include <fstream>
+#include <regex>
+#include <iterator>
+#include <string.h>
+#include <map>
 #include "Texture.h"
+#include "Uniform.h"
 
 class Material
 {
@@ -8,6 +15,7 @@ private:
 
 public:
 	std::vector<Texture*> textures;
+	std::unordered_map<std::string, Uniform*> defaultUniforms;
 
 	Material(std::string _srcShader);
 	Material(std::string _srcShader, std::string _srcTex);

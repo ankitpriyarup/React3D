@@ -1,19 +1,20 @@
 #include "Camera.h"
+#include <iostream>
 
 void Camera::updateCameraVectors()
 {
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front = glm::normalize(front);
+	glm::vec3 _front;
+	_front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	_front.y = sin(glm::radians(pitch));
+	_front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front = glm::normalize(_front);
 
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
 }
 
 Camera::Camera(glm::vec3 _position, glm::vec3 _up, float _yaw, float _pitch) :
-	front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM)
+	front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY)
 {
 	position = _position;
 	worldUp = _up;
@@ -27,9 +28,9 @@ glm::mat4 Camera::GetViewMatrix() const
 	return glm::lookAt(position, position + front, up);
 }
 
-void Camera::ProcessKeyboard(CameraMovement _direction, float _deltaTime)
+void Camera::ProcessKeyboard(CameraMovement _direction, double _deltaTime)
 {
-	float velocity = movementSpeed * _deltaTime;
+	float velocity = (float)(movementSpeed * _deltaTime);
 	switch (_direction)
 	{
 	case FORWARD:
@@ -67,19 +68,8 @@ void Camera::ProcessMouseMovement(float _xOffset, float _yOffset, bool _constrai
 	updateCameraVectors();
 }
 
-void Camera::ProcessMouseScroll(float _yOffset)
+void Camera::ProcessPanMovement(float _xOffset, float _yOffset)
 {
-	if (zoom >= 1.0f && zoom <= 45.0f)
-		zoom -= _yOffset;
-
-	if (zoom <= 1.0f)
-		zoom = 1.0f;
-
-	if (zoom >= 45.0f)
-		zoom = 45.0f;
-}
-
-GLfloat Camera::GetZoom() const
-{
-	return zoom;
+	position -= right  * _xOffset * mouseSensitivity * 0.1f;
+	position -= up * _yOffset * mouseSensitivity * 0.1f;
 }

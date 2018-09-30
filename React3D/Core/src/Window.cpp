@@ -51,7 +51,6 @@ void Window::CreateWindow(int& width, int& height, WindowState state, const char
 	}
 
 	glfwMakeContextCurrent(*window);
-	glfwSwapInterval(1);
 	glewExperimental = GL_TRUE;
 
 	GLFWimage icons[1];
@@ -67,14 +66,17 @@ void Window::CreateWindow(int& width, int& height, WindowState state, const char
 		glGetString(GL_RENDERER) <<
 		std::endl;
 
+	glViewport(0, 0, width, height);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 
 	load();
 
 	while (!glfwWindowShouldClose(*window))
 	{
 		glfwPollEvents();
+		glClearDepth(1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		refresh();

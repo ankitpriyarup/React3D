@@ -14,9 +14,8 @@ enum CameraMovement
 
 const double YAW = -90.0f;
 const double PITCH = 0.0f;
-const double SPEED = 6.0f;
-const double SENSITIVITY = 0.25f;
-const double ZOOM = 45.0f;
+const double SPEED = 5.0f;
+const double SENSITIVITY = 0.01f;
 
 class Camera
 {
@@ -30,17 +29,14 @@ private:
 	float pitch;
 	float movementSpeed;
 	float mouseSensitivity;
-	float zoom;
 
 	void updateCameraVectors();
 
 public:
-	Camera(glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f),
+	Camera(glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f),
 		float _yaw = YAW, float _pitch = PITCH);
 	glm::mat4 GetViewMatrix() const;
-	void ProcessKeyboard(CameraMovement _direction, float _deltaTime);
+	void ProcessKeyboard(CameraMovement _direction, double _deltaTime);
 	void ProcessMouseMovement(float _xOffset, float _yOffset, bool _constrainPitch = true);
-	void ProcessMouseScroll(float _yOffset);
-	GLfloat GetZoom() const;
+	void ProcessPanMovement(float _xOffset, float _yOffset);
 };

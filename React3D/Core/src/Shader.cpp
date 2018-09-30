@@ -99,6 +99,41 @@ void Shader::Unbind() const
 	GLCall(glUseProgram(0));
 }
 
+void Shader::SetUniform(const std::string & name, Uniform uniform)
+{
+	switch (uniform.type)
+	{
+		case Uniform::INT:
+		{
+			SetUniform1i(name, *(int*)(uniform.value));
+			break;
+		}
+		case Uniform::FLOAT:
+		{
+			SetUniform1f(name, *(float*)(uniform.value));
+			break;
+		}
+		case Uniform::VECTOR2:
+		{
+			float* temp = (float*)(uniform.value);
+			SetUniform2f(name, temp[0], temp[1]);
+			break;
+		}
+		case Uniform::VECTOR3:
+		{
+			float* temp = (float*)(uniform.value);
+			SetUniform3f(name, temp[0], temp[1], temp[2]);
+			break;
+		}
+		case Uniform::VECTOR4:
+		{
+			float* temp = (float*)(uniform.value);
+			SetUniform4f(name, temp[0], temp[1], temp[2], temp[3]);
+			break;
+		}
+	}
+}
+
 void Shader::SetUniform1i(const std::string & name, int value)
 {
 	GLCall(glUniform1i(GetUniformLocation(name), value));
@@ -107,6 +142,16 @@ void Shader::SetUniform1i(const std::string & name, int value)
 void Shader::SetUniformMat4f(const std::string & name, const glm::mat4 & matrix)
 {
 	glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
+}
+
+void Shader::SetUniform2f(const std::string & name, float v0, float v1)
+{
+	(glUniform2f(GetUniformLocation(name), v0, v1));
+}
+
+void Shader::SetUniform3f(const std::string & name, float v0, float v1, float v2)
+{
+	(glUniform3f(GetUniformLocation(name), v0, v1, v2));
 }
 
 void Shader::SetUniform1f(const std::string & name, float value)

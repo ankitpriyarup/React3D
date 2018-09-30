@@ -17,8 +17,10 @@ component::MeshRenderer::MeshRenderer(Material* _material, Mesh* _mesh)
 	if (material->textures.size() > 0)
 	{
 		material->textures[0]->Bind(0);
-		shader->SetUniform1i("albedo", 0);
+		shader->SetUniform1i("u_albedo", 0);
 	}
+	for (auto it = material->defaultUniforms.begin(); it != material->defaultUniforms.end(); it++)
+		shader->SetUniform(it->first, *it->second);
 }
 
 component::MeshRenderer::~MeshRenderer()

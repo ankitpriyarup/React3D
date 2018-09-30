@@ -5,13 +5,24 @@ namespace scene
 	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) :
 		Scene(Projection::Perspective, _width, _height)
 	{
-		texMat = new Material("res/shaders/UnlitTexture.shader", "res/textures/icon_react_large.png");
+		texMat = new Material("res/shaders/UnlitTexture.shader", "res/textures/container.png");
+		float* col = (float*)texMat->defaultUniforms["u_color"]->value;
+		col[0] = 1.0f;
+		col[1] = 1.0f;
+		col[2] = 0.0f;
+		col[3] = 1.0f;
+		float* blend = (float*)texMat->defaultUniforms["u_blend"]->value;
+		*blend = 0.5f;
 
 		AddGameObject("test", glm::vec3(5, 0, -10))
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 
 		AddGameObject("test2", glm::vec3(-5, 0, -10))
+			->AddMeshRenderer(new component::MeshRenderer(texMat,
+				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
+
+		AddGameObject("test3", glm::vec3(0, 0, -10))
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 	}
@@ -21,23 +32,15 @@ namespace scene
 		delete texMat;
 	}
 
-	int logoIncrementX = 1;
-	int logoIncrementY = 1;
 	int incrementRot = 0;
-	void TestObjectRendering::OnUpdate(float deltaTime)
+	void TestObjectRendering::OnUpdate(double deltaTime)
 	{
 		Scene::OnUpdate(deltaTime);
 
 		component::Transform* transform =
 			(component::Transform*) gameObjects["test"]->GetComponent(component::TRANSFORM);
 
-		glm::vec3 curPos = transform->getPosition();
-		logoIncrementX *= ((int)curPos.x > (*width - 50) || curPos.x < 0) ? -1 : 1;
-		logoIncrementY *= ((int)curPos.y >(*height - 100) || curPos.y < 0) ? -1 : 1;
-		incrementRot++;
-
-		//transform->setPosition(glm::vec3(curPos.x + logoIncrementX , curPos.y + logoIncrementY, curPos.z));
-		transform->setRotation(glm::vec4(0, 1, 1, incrementRot * 0.01f));
+		transform->setRotation(glm::vec4(0, 1, 1, ++incrementRot * 0.001f));
 		transform->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
 		transform->Update();
 	}

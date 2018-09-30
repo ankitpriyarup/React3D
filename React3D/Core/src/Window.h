@@ -6,6 +6,7 @@
 
 class Window
 {
+
 public:
 	enum WindowState { RESTORED_DOWN, MAXIMIZED, FULLSCREEN };
 
