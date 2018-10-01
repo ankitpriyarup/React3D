@@ -30,31 +30,57 @@ in vec2 v_TexCoord;
 in vec3 v_Normal;
 in vec3 v_FragPos;
 
-uniform vec3 lightView;
-uniform vec3 lightPos;
-uniform vec3 lightColor;
-uniform sampler2D u_albedo;
-uniform sampler2D u_normalmap;
-uniform vec4 u_color;
-uniform float u_blend;
-uniform float u_ambience;
-uniform float u_specular;
+uniform vec3		l_view;
+uniform vec3		l_pos;
+uniform vec3		l_dir;
+uniform vec3		l_color;
+uniform float		l_constant;
+uniform float		l_linear;
+uniform float		l_quadratic;
+uniform float		l_cutoff;
+uniform float		l_outercutoff;
+uniform int			l_type;
+uniform sampler2D	u_albedo;
+uniform sampler2D	u_normalmap;
+uniform vec4		u_color;
+uniform float		u_blend;
+uniform float		u_ambience;
+uniform float		u_specular;
 
 void main()
 {
 	vec4 texColor = texture(u_albedo, v_TexCoord);
 
-	vec3 ambient = u_ambience * lightColor;
-
+	vec3 ambient = u_ambience * l_color;
 	vec3 norm = normalize(v_Normal);
-	vec3 lightDir = normalize(lightPos - v_FragPos);
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = diff * lightColor * vec3(texColor);
 
-	vec3 viewDir = normalize(lightView - v_FragPos);
+	vec3 lightDir = vec3(0.0, 0.0, 0.0);
+	if (l_type == 0) lightDir = normalize(-l_dir);
+	else lightDir = normalize(l_pos - v_FragPos);
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = diff * l_color * vec3(texColor);
+
+	vec3 viewDir = normalize(l_view - v_FragPos);
 	vec3 reflectDir = reflect(-lightDir, norm);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = u_specular * spec * lightColor * vec3(texture(u_normalmap, v_TexCoord));
+	vec3 specular = u_specular * spec * l_color * vec3(texture(u_normalmap, v_TexCoord));
+
+	if (l_type == 1)
+	{
+		float distance = length(l_pos - v_FragPos);
+		float attenuation = 1.0f / (l_constant + l_linear * distance + l_quadratic * (distance * distance));
+		ambient *= attenuation;
+		diffuse *= attenuation;
+		specular *= attenuation;
+	}
+	else if (l_type == 2)
+	{
+		float theta = dot(lightDir, normalize(-l_dir));
+		float epsilon = (l_cutoff - l_outercutoff);
+		float intensity = clamp((theta - l_outercutoff) / epsilon, 0.0, 1.0);
+		diffuse *= intensity;
+		specular *= intensity;
+	}
 
 	vec3 resLight = ambient + diffuse + specular;
 	float blendInverse = 1.0 - u_blend;

@@ -23,9 +23,9 @@ layout(location = 0) out vec4 color;
 
 in vec2 v_TexCoord;
 
-uniform sampler2D u_albedo;
-uniform vec4 u_color;
-uniform float u_blend;
+uniform sampler2D	u_albedo;
+uniform vec4		u_color;
+uniform float		u_blend;
 
 void main()
 {

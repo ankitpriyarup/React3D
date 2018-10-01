@@ -30,12 +30,13 @@ in vec2 v_TexCoord;
 in vec3 v_Normal;
 in vec3 v_FragPos;
 
-uniform vec3 lightPos;
-uniform vec3 lightColor;
-uniform sampler2D u_albedo;
-uniform vec4 u_color;
-uniform float u_blend;
-uniform float u_ambience;
+uniform vec3		lightPos;
+uniform vec3		lightDirection;
+uniform vec3		lightColor;
+uniform sampler2D	u_albedo;
+uniform vec4		u_color;
+uniform float		u_blend;
+uniform float		u_ambience;
 
 void main()
 {

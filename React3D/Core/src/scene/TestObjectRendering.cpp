@@ -15,7 +15,7 @@ namespace scene
 		float* blend = (float*)texMat->defaultUniforms["u_blend"]->value;
 		*blend = 0.5f;
 		float* ambience = (float*)texMat->defaultUniforms["u_ambience"]->value;
-		*ambience = 0.8f;
+		*ambience = 0.3f;
 		float* specular = (float*)texMat->defaultUniforms["u_specular"]->value;
 		*specular = 3.0f;
 
@@ -42,14 +42,35 @@ namespace scene
 		component::MeshRenderer* rend3 =
 			(component::MeshRenderer*) gameObjects["test3"]->GetComponent(component::MESH_RENDERER);
 		rend1->getShader()->Bind();
-		rend1->getShader()->SetUniform3f("lightPos", 10, 10, 1);
-		rend1->getShader()->SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform1i("l_type", 2);
+		rend1->getShader()->SetUniform3f("l_pos", 0, 0, -8);
+		rend1->getShader()->SetUniform3f("l_dir", 0, 0, 1);
+		rend1->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
+		rend1->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
+		rend1->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform1f("l_constant", 0.5f);
+		rend1->getShader()->SetUniform1f("l_linear", 0.05f);
+		rend1->getShader()->SetUniform1f("l_quadratic", 0.015f);
 		rend2->getShader()->Bind();
-		rend2->getShader()->SetUniform3f("lightPos", 10, 10, 1);
-		rend2->getShader()->SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform1i("l_type", 2);
+		rend2->getShader()->SetUniform3f("l_pos", 0, 0, -8);
+		rend2->getShader()->SetUniform3f("l_dir", 0, 0, 1);
+		rend2->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
+		rend2->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
+		rend2->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform1f("l_constant", 0.5f);
+		rend2->getShader()->SetUniform1f("l_linear", 0.05f);
+		rend2->getShader()->SetUniform1f("l_quadratic", 0.015f);
 		rend3->getShader()->Bind();
-		rend3->getShader()->SetUniform3f("lightPos", 10, 10, 1);
-		rend3->getShader()->SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
+		rend3->getShader()->SetUniform1i("l_type", 2);
+		rend3->getShader()->SetUniform3f("l_pos", 0, 0, -8);
+		rend3->getShader()->SetUniform3f("l_dir", 0, 0, 1);
+		rend3->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
+		rend3->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
+		rend3->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
+		rend3->getShader()->SetUniform1f("l_constant", 0.5f);
+		rend3->getShader()->SetUniform1f("l_linear", 0.05f);
+		rend3->getShader()->SetUniform1f("l_quadratic", 0.015f);
 	}
 
 	scene::TestObjectRendering::~TestObjectRendering()
@@ -61,7 +82,6 @@ namespace scene
 	void TestObjectRendering::OnUpdate(double deltaTime)
 	{
 		Scene::OnUpdate(deltaTime);
-
 		component::Transform* transform =
 			(component::Transform*) gameObjects["test"]->GetComponent(component::TRANSFORM);
 

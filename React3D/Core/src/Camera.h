@@ -40,4 +40,5 @@ public:
 	void ProcessMouseMovement(float _xOffset, float _yOffset, bool _constrainPitch = true);
 	void ProcessPanMovement(float _xOffset, float _yOffset);
 	glm::vec3 getPosition();
+	glm::vec3 getFront() const;
 };
