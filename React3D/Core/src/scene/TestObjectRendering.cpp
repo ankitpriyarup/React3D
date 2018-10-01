@@ -5,7 +5,7 @@ namespace scene
 	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) :
 		Scene(Projection::Perspective, _width, _height)
 	{
-		texMat = new Material("res/shaders/BumpSpecular.shader", "res/textures/container.png");
+		texMat = new Material("res/shaders/BumpedSpecular.shader", "res/textures/container.png");
 		texMat->assignNormalMap("res/textures/container_specular.png");
 		float* col = (float*)texMat->defaultUniforms["u_color"]->value;
 		col[0] = 1.0f;

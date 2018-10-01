@@ -164,7 +164,7 @@
     <ClInclude Include="src\vendor\imgui\stb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\BumpSpecular.shader" />
+    <None Include="res\shaders\BumpedSpecular.shader" />
     <None Include="res\shaders\Diffuse.shader" />
     <None Include="res\shaders\Specular.shader" />
     <None Include="res\shaders\UnlitTexture.shader" />

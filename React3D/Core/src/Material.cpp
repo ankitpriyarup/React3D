@@ -99,8 +99,9 @@ void Material::assignAlbedo(std::string _srcTex)
 		textures.emplace_back(new Texture(_srcTex));
 	else
 	{
-		delete textures[1];
-		textures[1] = new Texture(_srcTex);
+		Texture* temp = textures[0];
+		textures[0] = new Texture(_srcTex);
+		delete temp;
 	}
 }
 
@@ -110,8 +111,9 @@ void Material::assignNormalMap(std::string _srcTex)
 		textures.emplace_back(new Texture(_srcTex));
 	else
 	{
-		delete textures[1];
+		Texture* temp = textures[1];
 		textures[1] = new Texture(_srcTex);
+		delete temp;
 	}
 }
 
