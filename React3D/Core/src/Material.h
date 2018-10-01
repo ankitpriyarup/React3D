@@ -19,6 +19,8 @@ public:
 
 	Material(std::string _srcShader);
 	Material(std::string _srcShader, std::string _srcTex);
+	void assignAlbedo(std::string _srcTex);
+	void assignNormalMap(std::string _srcTex);
 	~Material();
 	std::string getShader() const;
 };

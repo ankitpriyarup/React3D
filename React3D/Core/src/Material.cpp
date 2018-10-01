@@ -93,6 +93,28 @@ Material::Material(std::string _srcShader, std::string _srcTex) : srcShader(_src
 	textures.emplace_back(new Texture(_srcTex));
 }
 
+void Material::assignAlbedo(std::string _srcTex)
+{
+	if (textures.size() < 1)
+		textures.emplace_back(new Texture(_srcTex));
+	else
+	{
+		delete textures[1];
+		textures[1] = new Texture(_srcTex);
+	}
+}
+
+void Material::assignNormalMap(std::string _srcTex)
+{
+	if (textures.size() < 2)
+		textures.emplace_back(new Texture(_srcTex));
+	else
+	{
+		delete textures[1];
+		textures[1] = new Texture(_srcTex);
+	}
+}
+
 Material::~Material()
 {
 	while (!textures.empty())

@@ -20,6 +20,13 @@ component::MeshRenderer::MeshRenderer(Material* _material, Mesh* _mesh)
 		material->textures[0]->Bind(0);
 		shader->SetUniform1i("u_albedo", 0);
 	}
+
+	auto fit = material->defaultUniforms.find("u_normalmap");
+	if (fit != material->defaultUniforms.end())
+	{
+		material->textures[1]->Bind(1);
+		shader->SetUniform1i("u_normalmap", 1);
+	}
 	for (auto it = material->defaultUniforms.begin(); it != material->defaultUniforms.end(); it++)
 		shader->SetUniform(it->first, *it->second);
 }
