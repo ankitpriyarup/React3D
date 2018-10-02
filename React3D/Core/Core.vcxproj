@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\dependencies\Assimp\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\dependencies\Assimp\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

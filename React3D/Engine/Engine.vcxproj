@@ -78,12 +78,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src\vendor;$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src\vendor;$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src;$(SolutionDir)Core\dependencies\Assimp\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Core\dependencies\GLFW\lib-vc2015;$(SolutionDir)Core\dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib;assimp-vc140-mt.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Core\dependencies\GLFW\lib-vc2015;$(SolutionDir)Core\dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Core\dependencies\Assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
       <EntryPointSymbol>
@@ -112,13 +112,13 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src\vendor;$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src\vendor;$(SolutionDir)Core\src\vendor;$(SolutionDir)Core\dependencies\GLFW\include;$(SolutionDir)Core\dependencies\GLEW\include;$(SolutionDir)Core\src;$(SolutionDir)Core\dependencies\Assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)Core\dependencies\GLFW\lib-vc2015;$(SolutionDir)Core\dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Core\dependencies\GLFW\lib-vc2015;$(SolutionDir)Core\dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Core\dependencies\Assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib;assimp-vc140-mt.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
@@ -166,6 +166,7 @@
   <ItemGroup>
     <None Include="res\shaders\BumpedSpecular.shader" />
     <None Include="res\shaders\Diffuse.shader" />
+    <None Include="res\shaders\Skybox.shader" />
     <None Include="res\shaders\Specular.shader" />
     <None Include="res\shaders\UnlitTexture.shader" />
     <None Include="res\shaders\UnlitColor.shader" />

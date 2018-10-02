@@ -69,5 +69,6 @@
     <None Include="res\shaders\Diffuse.shader" />
     <None Include="res\shaders\Specular.shader" />
     <None Include="res\shaders\BumpedSpecular.shader" />
+    <None Include="res\shaders\Skybox.shader" />
   </ItemGroup>
 </Project>

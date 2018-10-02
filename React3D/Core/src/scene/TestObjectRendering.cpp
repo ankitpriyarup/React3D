@@ -24,6 +24,7 @@ namespace scene
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 
+		//POST SCENE CONSTRUCTION
 		AddGameObject("Light" + std::to_string(++pointLightCount), glm::vec3(0.0f, 0.0f, -12.0f))
 			->AddLightSource(new component::LightSource(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.05f, 0.05f, 0.05f),
 				glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0.5f, 0.5f, 0.5f), 1.0f, 0.09f, 0.032f));
