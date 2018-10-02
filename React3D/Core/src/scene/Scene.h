@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "GameObject.h"
+#include "Skybox.h"
 #include "component/Component.h"
 #include "component/Transform.h"
 #include "component/MeshRenderer.h"
@@ -45,6 +46,7 @@ namespace scene
 		glm::mat4* projectionMatrix;
 		glm::mat4* viewMatrix;
 		std::unordered_map<std::string, GameObject*> gameObjects;
+		Skybox* sceneSkybox = nullptr;
 
 		Scene(Projection _projection, int* _width, int* _height);
 		virtual ~Scene();

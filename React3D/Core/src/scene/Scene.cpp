@@ -78,6 +78,8 @@ void scene::Scene::OnRender(Renderer * _renderer)
 			}
 		}
 	}
+
+	if (sceneSkybox != nullptr) sceneSkybox->Render(viewMatrix, projectionMatrix);
 }
 
 void scene::Scene::KeyCallback(int key, int scancode, int action, int mode)

@@ -5,8 +5,8 @@ layout(location = 0) in vec3 position;
 
 out vec3 v_texCoord;
 
-uniform mat4 u_view;
 uniform mat4 u_projection;
+uniform mat4 u_view;
 
 void main()
 {

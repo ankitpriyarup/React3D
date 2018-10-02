@@ -5,6 +5,10 @@ namespace scene
 	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) :
 		Scene(Projection::Perspective, _width, _height)
 	{
+		sceneSkybox = new Skybox("res/textures/redplanet_back.png", "res/textures/redplanet_front.png",
+			"res/textures/redplanet_down.png", "res/textures/redplanet_up.png",
+			"res/textures/redplanet_left.png", "res/textures/redplanet_right.png");
+
 		texMat = new Material("res/shaders/BumpedSpecular.shader", "res/textures/container.png");
 		texMat->assignNormalMap("res/textures/container_specular.png");
 		float* col = (float*)texMat->defaultUniforms["u_color"]->value;
