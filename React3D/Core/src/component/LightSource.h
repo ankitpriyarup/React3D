@@ -9,13 +9,25 @@ namespace component
 	class LightSource : public Component
 	{
 	private:
-		glm::vec3 lightColor;
+		glm::vec3 color;
+		glm::vec3 ambient;
+		glm::vec3 diffuse;
+		glm::vec3 specular;
+		float constant;
+		float linear;
+		float quadratic;
 
 	public:
-		LightSource(glm::vec3 _color);
+		LightSource(glm::vec3 _color, glm::vec3 _ambient, glm::vec3 _diffuse,
+			glm::vec3 _specular, float _constant, float _linear, float _quadratic);
 		~LightSource();
-		void setColor(glm::vec3 _color);
 		glm::vec3 getColor();
+		glm::vec3 getAmbient();
+		glm::vec3 getDiffuse();
+		glm::vec3 getSpecular();
+		float getConstant();
+		float getLinear();
+		float getQuadratic();
 
 		void Update() override;
 		void Render(Renderer* _renderer) override;

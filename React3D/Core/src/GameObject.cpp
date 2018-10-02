@@ -44,6 +44,11 @@ component::Component* GameObject::GetComponent(std::string _componentName)
 
 void GameObject::AddMeshRenderer(component::MeshRenderer * _meshRenderer)
 {
+	if (components.find(_meshRenderer->GetComponentName()) != components.end())
+	{
+		std::cout << "Error: Single GameObject cannot have multiple Mesh Renderer." << std::endl;
+		return;
+	}
 	auto it = components.find(component::MESH_RENDERER);
 	if (it == components.end())
 	{
@@ -55,6 +60,11 @@ void GameObject::AddMeshRenderer(component::MeshRenderer * _meshRenderer)
 
 void GameObject::AddLightSource(component::LightSource * _lightSource)
 {
+	if (components.find(_lightSource->GetComponentName()) != components.end())
+	{
+		std::cout << "Error: Single GameObject cannot have multiple Light Source." << std::endl;
+		return;
+	}
 	auto it = components.find(component::LIGHT_SOURCE);
 	if (it == components.end())
 	{
