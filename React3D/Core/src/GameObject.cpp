@@ -9,6 +9,25 @@ GameObject::GameObject(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix, glm
 	transform->gameObject = this;
 }
 
+GameObject::GameObject(glm::mat4 * _projectionMatrix, glm::mat4 * _viewMatrix, glm::vec3 _position, glm::vec4 _rotation)
+{
+	component::Transform* transform = new component::Transform(_projectionMatrix, _viewMatrix,
+		_position, _rotation, component::vecOne);
+	components.insert(std::make_pair(transform->GetComponentName(), transform));
+
+	transform->gameObject = this;
+}
+
+GameObject::GameObject(glm::mat4 * _projectionMatrix, glm::mat4 * _viewMatrix,
+	glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale)
+{
+	component::Transform* transform = new component::Transform(_projectionMatrix, _viewMatrix,
+		_position, _rotation, _scale);
+	components.insert(std::make_pair(transform->GetComponentName(), transform));
+
+	transform->gameObject = this;
+}
+
 GameObject::~GameObject()
 {
 	for (auto it = components.begin(); it != components.end(); it++)

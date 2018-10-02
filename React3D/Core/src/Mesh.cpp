@@ -34,17 +34,17 @@ Mesh::Mesh(bool _isPerspective, PrimitiveMesh _mesh)
 			 0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
 			 0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
 			-0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
-																				   
+
 			-0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
 			 0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
 			 0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
 			-0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
-																				   
+
 			-0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
 			-0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
 			-0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
 			-0.5f * projMul, -0.5f * projMul,  0.5f * projMul,  0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
-																				   
+
 			 0.5f * projMul,  0.5f * projMul,  0.5f * projMul,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
 			 0.5f * projMul,  0.5f * projMul, -0.5f * projMul,  1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
 			 0.5f * projMul, -0.5f * projMul, -0.5f * projMul,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,

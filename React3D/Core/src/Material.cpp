@@ -37,10 +37,12 @@ Material::Material(std::string _srcShader) : srcShader(_srcShader)
 					uniform = new Uniform{ Uniform::Type::VECTOR3, new float[3]{0.0f, 0.0f, 0.0f} };
 				else if (*iter == "vec4")
 					uniform = new Uniform{ Uniform::Type::VECTOR4, new float[4]{0.0f, 0.0f, 0.0f, 0.0f} };
-				else break;
+				else uniform = nullptr;
 
 				std::advance(iter, 1);
-				defaultUniforms.emplace(std::make_pair(*iter, uniform));
+				std::string key = *iter;
+				if (key == "x_viewPos") containsViewUniform = true;
+				if (key[0] == 'u') defaultUniforms.emplace(std::make_pair(*iter, uniform));
 			}
 		}
 	}
@@ -83,10 +85,12 @@ Material::Material(std::string _srcShader, std::string _srcTex) : srcShader(_src
 					uniform = new Uniform{ Uniform::Type::VECTOR3, new float[3]{ 0.0f, 0.0f, 0.0f } };
 				else if (*iter == "vec4")
 					uniform = new Uniform{ Uniform::Type::VECTOR4, new float[4]{ 0.0f, 0.0f, 0.0f, 0.0f } };
-				else break;
+				else uniform = nullptr;
 
 				std::advance(iter, 1);
-				defaultUniforms.emplace(std::make_pair(*iter, uniform));
+				std::string key = *iter;
+				if (key == "x_viewPos") containsViewUniform = true;
+				if (key[0] == 'u') defaultUniforms.emplace(std::make_pair(*iter, uniform));
 			}
 		}
 	}

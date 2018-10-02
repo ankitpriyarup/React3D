@@ -59,6 +59,7 @@ void scene::Scene::OnRender(Renderer * _renderer)
 {
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glm::vec3 camView = getSceneCameraPosition();
+	glm::vec3 camFront = getSceneCameraFront();
 	
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
@@ -67,11 +68,11 @@ void scene::Scene::OnRender(Renderer * _renderer)
 			(component::MeshRenderer*) it->second->GetComponent(component::MESH_RENDERER);
 		if (rend != nullptr)
 		{
-			if (rend->getMaterial()->defaultUniforms.find("lightView") ==
-				rend->getMaterial()->defaultUniforms.end())
-				continue;
+			if (!rend->getMaterial()->containsViewUniform) continue;
 			rend->getShader()->Bind();
-			rend->getShader()->SetUniform3f("lightView", camView.x, camView.y, camView.z);
+			rend->getShader()->SetUniform3f("x_viewPos", camView.x, camView.y, camView.z);
+			rend->getShader()->SetUniform3f("x_spotLight.position", camView.x, camView.y, camView.z);
+			rend->getShader()->SetUniform3f("x_spotLight.direction", camFront.x, camFront.y, camFront.z);
 		}
 	}
 }
@@ -118,14 +119,33 @@ void scene::Scene::MouseCallback(double xPos, double yPos)
 	UpdateProjections();
 }
 
-glm::vec3 scene::Scene::getSceneCameraPosition()
+glm::vec3 scene::Scene::getSceneCameraPosition() const
 {
 	return sceneCamera->getPosition();
+}
+
+glm::vec3 scene::Scene::getSceneCameraFront() const
+{
+	return sceneCamera->getFront();
 }
 
 GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position)
 {
 	GameObject* gb = new GameObject(projectionMatrix, viewMatrix, _position);
+	gameObjects.insert(std::make_pair(_name, gb));
+	return gb;
+}
+
+GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position, glm::vec4 _rotation)
+{
+	GameObject* gb = new GameObject(projectionMatrix, viewMatrix, _position, _rotation);
+	gameObjects.insert(std::make_pair(_name, gb));
+	return gb;
+}
+
+GameObject * scene::Scene::AddGameObject(std::string _name, glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale)
+{
+	GameObject* gb = new GameObject(projectionMatrix, viewMatrix, _position, _rotation, _scale);
 	gameObjects.insert(std::make_pair(_name, gb));
 	return gb;
 }

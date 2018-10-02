@@ -37,8 +37,12 @@ namespace scene
 		void KeyCallback(int key, int scancode, int action, int mode);
 		void MouseButtonCallback(int button, int action, int mode);
 		void MouseCallback(double xPos, double yPos);
-		glm::vec3 getSceneCameraPosition();
+		glm::vec3 getSceneCameraPosition() const;
+		glm::vec3 getSceneCameraFront() const;
 		GameObject* AddGameObject(std::string _name, glm::vec3 _position);
+		GameObject* AddGameObject(std::string _name, glm::vec3 _position, glm::vec4 _rotation);
+		GameObject* AddGameObject(std::string _name,
+			glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 		void UpdateProjections();
 	};
 }

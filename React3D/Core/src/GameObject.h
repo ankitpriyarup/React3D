@@ -13,6 +13,9 @@ private:
 
 public:
 	GameObject(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix, glm::vec3 _position);
+	GameObject(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix, glm::vec3 _position, glm::vec4 _rotation);
+	GameObject(glm::mat4* _projectionMatrix, glm::mat4* _viewMatrix,
+		glm::vec3 _position, glm::vec4 _rotation, glm::vec3 _scale);
 	~GameObject();
 	component::Component* GetComponent(std::string _componentName);
 	void AddMeshRenderer(component::MeshRenderer* _meshRenderer);

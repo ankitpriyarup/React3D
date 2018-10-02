@@ -16,6 +16,7 @@ private:
 public:
 	std::vector<Texture*> textures;
 	std::unordered_map<std::string, Uniform*> defaultUniforms;
+	bool containsViewUniform = false;
 
 	Material(std::string _srcShader);
 	Material(std::string _srcShader, std::string _srcTex);

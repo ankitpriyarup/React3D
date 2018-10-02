@@ -5,7 +5,7 @@ namespace scene
 	scene::TestObjectRendering::TestObjectRendering(int* _width, int* _height) :
 		Scene(Projection::Perspective, _width, _height)
 	{
-		texMat = new Material("res/shaders/BumpedSpecular.shader", "res/textures/container.png");
+		texMat = new Material("res/shaders/Diffuse.shader", "res/textures/container.png");
 		texMat->assignNormalMap("res/textures/container_specular.png");
 		float* col = (float*)texMat->defaultUniforms["u_color"]->value;
 		col[0] = 1.0f;
@@ -14,63 +14,91 @@ namespace scene
 		col[3] = 1.0f;
 		float* blend = (float*)texMat->defaultUniforms["u_blend"]->value;
 		*blend = 0.5f;
-		float* ambience = (float*)texMat->defaultUniforms["u_ambience"]->value;
-		*ambience = 0.3f;
-		float* specular = (float*)texMat->defaultUniforms["u_specular"]->value;
-		*specular = 3.0f;
+		float* shininess = (float*)texMat->defaultUniforms["u_shininess"]->value;
+		*shininess = 12.0f;
 
 		AddGameObject("lightSource", glm::vec3(10, 10, 1))
 			->AddLightSource(new component::LightSource(glm::vec3(1.0f, 1.0f, 1.0f)));
 
-		AddGameObject("test", glm::vec3(5, 0, -10))
+		AddGameObject("crate1", glm::vec3(0, 0, -10))
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 
-		AddGameObject("test3", glm::vec3(0, 0, -10))
+		AddGameObject("crate2", glm::vec3(-2, 0, -10), glm::vec4(0, 1, 0, -0.35f))
 			->AddMeshRenderer(new component::MeshRenderer(texMat,
 				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
 
-		AddGameObject("test2", glm::vec3(-5, 0, -10))
-			->AddMeshRenderer(new component::MeshRenderer(texMat,
-				new Mesh(projection == Projection::Perspective, Mesh::PrimitiveMesh::cube)));
-
-		//TEST
+		//TEST TO REMOVE
 		component::MeshRenderer* rend1 =
-			(component::MeshRenderer*) gameObjects["test"]->GetComponent(component::MESH_RENDERER);
+			(component::MeshRenderer*) gameObjects["crate1"]->GetComponent(component::MESH_RENDERER);
 		component::MeshRenderer* rend2 =
-			(component::MeshRenderer*) gameObjects["test2"]->GetComponent(component::MESH_RENDERER);
-		component::MeshRenderer* rend3 =
-			(component::MeshRenderer*) gameObjects["test3"]->GetComponent(component::MESH_RENDERER);
+			(component::MeshRenderer*) gameObjects["crate2"]->GetComponent(component::MESH_RENDERER);
+
 		rend1->getShader()->Bind();
-		rend1->getShader()->SetUniform1i("l_type", 2);
-		rend1->getShader()->SetUniform3f("l_pos", 0, 0, -8);
-		rend1->getShader()->SetUniform3f("l_dir", 0, 0, 1);
-		rend1->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
-		rend1->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
-		rend1->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
-		rend1->getShader()->SetUniform1f("l_constant", 0.5f);
-		rend1->getShader()->SetUniform1f("l_linear", 0.05f);
-		rend1->getShader()->SetUniform1f("l_quadratic", 0.015f);
+		rend1->getShader()->SetUniform3f("x_dirLight.color", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform3f("x_dirLight.direction", -1.0f, -1.0f, 0.0f);
+		rend1->getShader()->SetUniform3f("x_dirLight.ambient", 0.03f, 0.03f, 0.03f);
+		rend1->getShader()->SetUniform3f("x_dirLight.diffuse", 0.5f, 0.5f, 0.5f);
+		rend1->getShader()->SetUniform3f("x_dirLight.specular", 0.2f, 0.2f, 0.2f);
+		rend1->getShader()->SetUniform1i("x_pointLightsCount", 2);
+		rend1->getShader()->SetUniform3f("x_pointLights[0].color", 0.0f, 1.0f, 0.0f);
+		rend1->getShader()->SetUniform3f("x_pointLights[0].position", 0.0f, 0.0f, -12.0f);
+		rend1->getShader()->SetUniform3f("x_pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+		rend1->getShader()->SetUniform3f("x_pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+		rend1->getShader()->SetUniform3f("x_pointLights[0].specular", 0.5f, 0.5f, 0.5f);
+		rend1->getShader()->SetUniform1f("x_pointLights[0].constant", 1.0f);
+		rend1->getShader()->SetUniform1f("x_pointLights[0].linear", 0.09f);
+		rend1->getShader()->SetUniform1f("x_pointLights[0].quadratic", 0.032f);
+		rend1->getShader()->SetUniform3f("x_pointLights[1].color", 0.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform3f("x_pointLights[1].position", -2.0f, -2.0f, -10.0f);
+		rend1->getShader()->SetUniform3f("x_pointLights[1].ambient", 0.1f, 0.1f, 0.1f);
+		rend1->getShader()->SetUniform3f("x_pointLights[1].diffuse", 1.6f, 1.6f, 1.6f);
+		rend1->getShader()->SetUniform3f("x_pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform1f("x_pointLights[1].constant", 2.0f);
+		rend1->getShader()->SetUniform1f("x_pointLights[1].linear", 0.2f);
+		rend1->getShader()->SetUniform1f("x_pointLights[1].quadratic", 0.06f);
+		rend1->getShader()->SetUniform3f("x_spotLight.color", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform3f("x_spotLight.ambient", 0.0f, 0.0f, 0.0f);
+		rend1->getShader()->SetUniform3f("x_spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform3f("x_spotLight.specular", 1.0f, 1.0f, 1.0f);
+		rend1->getShader()->SetUniform1f("x_spotLight.constant", 1.0f);
+		rend1->getShader()->SetUniform1f("x_spotLight.linear", 0.09f);
+		rend1->getShader()->SetUniform1f("x_spotLight.quadratic", 0.032f);
+		rend1->getShader()->SetUniform1f("x_spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+		rend1->getShader()->SetUniform1f("x_spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
 		rend2->getShader()->Bind();
-		rend2->getShader()->SetUniform1i("l_type", 2);
-		rend2->getShader()->SetUniform3f("l_pos", 0, 0, -8);
-		rend2->getShader()->SetUniform3f("l_dir", 0, 0, 1);
-		rend2->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
-		rend2->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
-		rend2->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
-		rend2->getShader()->SetUniform1f("l_constant", 0.5f);
-		rend2->getShader()->SetUniform1f("l_linear", 0.05f);
-		rend2->getShader()->SetUniform1f("l_quadratic", 0.015f);
-		rend3->getShader()->Bind();
-		rend3->getShader()->SetUniform1i("l_type", 2);
-		rend3->getShader()->SetUniform3f("l_pos", 0, 0, -8);
-		rend3->getShader()->SetUniform3f("l_dir", 0, 0, 1);
-		rend3->getShader()->SetUniform1f("l_cutoff", glm::cos(glm::radians(5.0f)));
-		rend3->getShader()->SetUniform1f("l_outercutoff", glm::cos(glm::radians(9.0f)));
-		rend3->getShader()->SetUniform3f("l_color", 1.0f, 1.0f, 1.0f);
-		rend3->getShader()->SetUniform1f("l_constant", 0.5f);
-		rend3->getShader()->SetUniform1f("l_linear", 0.05f);
-		rend3->getShader()->SetUniform1f("l_quadratic", 0.015f);
+		rend2->getShader()->SetUniform3f("x_dirLight.color", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform3f("x_dirLight.direction", -2.0f, 0.0f, -12.0f);
+		rend2->getShader()->SetUniform3f("x_dirLight.ambient", 0.03f, 0.03f, 0.03f);
+		rend2->getShader()->SetUniform3f("x_dirLight.diffuse", 0.5f, 0.5f, 0.5f);
+		rend2->getShader()->SetUniform3f("x_dirLight.specular", 0.2f, 0.2f, 0.2f);
+		rend2->getShader()->SetUniform1i("x_pointLightsCount", 2);
+		rend2->getShader()->SetUniform3f("x_pointLights[0].color", 0.0f, 1.0f, 0.0f);
+		rend2->getShader()->SetUniform3f("x_pointLights[0].position", 0.0f, -2.0f, -10.0f);
+		rend2->getShader()->SetUniform3f("x_pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+		rend2->getShader()->SetUniform3f("x_pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+		rend2->getShader()->SetUniform3f("x_pointLights[0].specular", 0.5f, 0.5f, 0.5f);
+		rend2->getShader()->SetUniform1f("x_pointLights[0].constant", 1.0f);
+		rend2->getShader()->SetUniform1f("x_pointLights[0].linear", 0.09f);
+		rend2->getShader()->SetUniform1f("x_pointLights[0].quadratic", 0.032f);
+		rend2->getShader()->SetUniform3f("x_pointLights[1].color", 0.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform3f("x_pointLights[1].position", -2.0f, -2.0f, -10.0f);
+		rend2->getShader()->SetUniform3f("x_pointLights[1].ambient", 0.1f, 0.1f, 0.1f);
+		rend2->getShader()->SetUniform3f("x_pointLights[1].diffuse", 1.6f, 1.6f, 1.6f);
+		rend2->getShader()->SetUniform3f("x_pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform1f("x_pointLights[1].constant", 2.0f);
+		rend2->getShader()->SetUniform1f("x_pointLights[1].linear", 0.2f);
+		rend2->getShader()->SetUniform1f("x_pointLights[1].quadratic", 0.06f);
+		rend2->getShader()->SetUniform3f("x_spotLight.color", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform3f("x_spotLight.ambient", 0.0f, 0.0f, 0.0f);
+		rend2->getShader()->SetUniform3f("x_spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform3f("x_spotLight.specular", 1.0f, 1.0f, 1.0f);
+		rend2->getShader()->SetUniform1f("x_spotLight.constant", 1.0f);
+		rend2->getShader()->SetUniform1f("x_spotLight.linear", 0.09f);
+		rend2->getShader()->SetUniform1f("x_spotLight.quadratic", 0.032f);
+		rend2->getShader()->SetUniform1f("x_spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+		rend2->getShader()->SetUniform1f("x_spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 	}
 
 	scene::TestObjectRendering::~TestObjectRendering()
@@ -78,16 +106,9 @@ namespace scene
 		delete texMat;
 	}
 
-	int incrementRot = 0;
 	void TestObjectRendering::OnUpdate(double deltaTime)
 	{
 		Scene::OnUpdate(deltaTime);
-		component::Transform* transform =
-			(component::Transform*) gameObjects["test"]->GetComponent(component::TRANSFORM);
-
-		transform->setRotation(glm::vec4(0, 1, 1, ++incrementRot * 0.001f));
-		transform->setScale(glm::vec3(2.0f, 2.0f, 2.0f));
-		transform->Update();
 	}
 
 	void TestObjectRendering::OnRender(Renderer* _renderer)
