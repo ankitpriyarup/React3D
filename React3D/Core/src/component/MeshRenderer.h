@@ -14,12 +14,16 @@ namespace component
 	class MeshRenderer : public Component
 	{
 	private:
+		struct vertex
+		{
+			VertexArray* vertexArray;
+			VertexBuffer* vertexBuffer;
+			VertexBufferLayout* layout;
+			IndexBuffer* indexBuffer;
+		};
+		std::vector<vertex*> meshData;
 		Mesh * mesh;
 		Material* material;
-		VertexArray* vertexArray;
-		VertexBuffer* vertexBuffer;
-		VertexBufferLayout* layout;
-		IndexBuffer* indexBuffer;
 		Shader* shader;
 
 	public:
