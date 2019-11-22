@@ -4,5 +4,5 @@ React 3D is a test game engine written in modern openGL entirely focussed to cov
 So far this project is able to perform different shading techniques - unlit, diffuse, specular & bumped with multiple light sources varying types (point, directional & spot light) along with a skybox and basic movement controls.
 
 <p align="center"> 
-  <img src="https://media.giphy.com/media/fQJSeRoN1tgD4ZsBe5/giphy.gif">
+  <iframe width="1292" height="480" src="https://www.youtube.com/embed/K3tyKCkNlRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
